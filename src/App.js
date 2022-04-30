@@ -6,10 +6,14 @@ import Signup from './views/auth/Signup';
 import DashboardAdmin from './views/admin/Dashboard';
 import DashboardVoter from './views/voter/Dashbord';
 import DashboardElectionParty from './views/electionParty/Dashboard';
+import ProfileVoter from "./views/voter/Profile";
+
 import Error from './views/Error';
-import Verify from './views/admin/Verify';
-import Profile from './views/admin/Profile';
-import Result from './views/admin/Result';
+import VerifyAdmin from './views/admin/Verify';
+import ProfileAdmin from './views/admin/Profile';
+import ResultAdmin from './views/admin/Result';
+import Docs from './views/common/Docs';
+import AboutUs from './views/common/AboutUs';
 
 
 const loading = (
@@ -23,16 +27,20 @@ export default function App() {
     <BrowserRouter>
       <Suspense fallback={loading} >
         <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/admin/verify' element={<Verify />} />
-          <Route path='/admin/profile' element={<Profile />} />
-          <Route path='/admin/result' element={<Result />} />
-          <Route path='/admin' element={<DashboardAdmin />} />
-          <Route path='/voter' element={<DashboardVoter />} />
-          <Route path='/election-party' element={<DashboardElectionParty />} />
-          <Route path='/404' element={<Error errorCode="404" />} />
-          <Route path='/500' element={<Error errorCode="500" />} />
+          <Route exact path='/login' element={<Login />} />
+          <Route exact path='/about-us' element={<AboutUs />} />
+          <Route exact path='/docs' element={<Docs />} />
+          <Route exact path='/signup' element={<Signup />} />
+          <Route exact path='/admin/verify' element={<VerifyAdmin />} />
+          <Route exact path='/admin/profile' element={<ProfileAdmin />} />
+          <Route exact path='/admin/result' element={<ResultAdmin />} />
+          <Route exact path='/admin' element={<DashboardAdmin />} />
+          <Route exact path='/voter' element={<DashboardVoter />} />
+          <Route exact path='/voter/profile' element={<ProfileVoter />} />
+          <Route exact path='/election-party' element={<DashboardElectionParty />} />
+          <Route exact path='/404' element={<Error errorCode="404" />} />
+          <Route exact path='/500' element={<Error errorCode="500" />} />
+          <Route path='*' element={<Error errorCode="404" />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

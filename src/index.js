@@ -8,10 +8,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import authRed from './store/reducers/auth';
+import configRed from './store/reducers/config';
 
 const rootReducer = combineReducers({
-  authRed: authRed
+  authRed: authRed,
+  configRed: configRed
 });
+
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

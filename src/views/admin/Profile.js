@@ -3,85 +3,45 @@ import { Grid, Box, Container, Typography, Divider, Card, TextField, Button, Tab
 import userImg from './../../assets/images/u2.jpg';
 import BodyLayout from '../common/BodyLayout';
 import { AiOutlineDelete } from 'react-icons/ai';
-
+import BasicProfileInfo from './../../components/BasicProfileInfo';
 
 export default function Profile() {
   return (
     <BodyLayout>
-      <Grid container spacing={2} >
-        <Grid item xs={12} sm={4} className="flex justifyCenter " >
-          <Box sx={{ width: '60%', height: '400px', mt: 5 }}>
-            <img alt="user img" src={userImg} className="img" />
-            <Button variant="contained" fullWidth>Update Image</Button>
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={8}>
-          <Container>
-            <StatsHeading label="Basic Info" />
-            <Box sx={{ m: 1 }}>
-              <Typography fontWeight='bold' color='gray' variant='subtitle1'>Name</Typography>
-              <Typography variant='h6'>Dark Alex</Typography>
-            </Box>
-            <Box sx={{ m: 1 }}>
-              <Typography fontWeight='bold' color='gray' variant='subtitle1'>Email</Typography>
-              <Typography variant='h6'>abc@xyz.com</Typography>
-            </Box>
-            <Box sx={{ m: 1 }}>
-              <Typography fontWeight='bold' color='gray' variant='subtitle1'>Aadhar Number</Typography>
-              <Typography variant='h6'>1324 7896 8521 6547</Typography>
-            </Box>
-          </Container>
-
-          <Container>
-            <StatsHeading label="Basic Info" />
-            <Card>
+      <Box sx={{ pb: 2, mb: 2 }}>
+        <BasicProfileInfo />
+      </Box>
+      <Divider />
+      <Box sx={{ pb: 2, mb: 2 }}>
+        <Grid container spacing={3} >
+          <Grid item xs={12} sm={4}>
+            <Container>
+              <StatsHeading label="Add New Admin" />
               <form>
                 <Box sx={{ m: 1 }}>
-                  <TextField fullWidth label="Current Password" variant="filled" />
+                  <TextField fullWidth label="Email" variant="outlined" />
                 </Box>
                 <Box sx={{ m: 1 }}>
-                  <TextField fullWidth label="New Password" variant="filled" />
+                  <TextField fullWidth label="Password" variant="outlined" />
                 </Box>
                 <Box sx={{ m: 1 }}>
-                  <TextField fullWidth label="Confirm New Password" variant="filled" />
+                  <TextField fullWidth label="Password" variant="outlined" />
                 </Box>
                 <Box sx={{ m: 1 }}>
                   <Button variant="contained" fullWidth>Update Password</Button>
                 </Box>
               </form>
-            </Card>
-          </Container>
-        </Grid >
-      </Grid >
-      <Grid container spacing={3} >
-        <Grid item xs={12} sm={4}>
-          <Container>
-            <StatsHeading label="Add New Admin" />
-            <form>
-              <Box sx={{ m: 1 }}>
-                <TextField fullWidth label="Email" variant="outlined" />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <TextField fullWidth label="Password" variant="outlined" />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <TextField fullWidth label="Password" variant="outlined" />
-              </Box>
-              <Box sx={{ m: 1 }}>
-                <Button variant="contained" fullWidth>Update Password</Button>
-              </Box>
-            </form>
-          </Container>
-        </Grid>
-        <Grid item xs={12} sm={8}>
-          <Container>
-            <StatsHeading label="All Admin's" />
-            <AdminTable />
+            </Container>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <Container>
+              <StatsHeading label="All Admin's" />
+              <AdminTable />
 
-          </Container>
+            </Container>
+          </Grid>
         </Grid>
-      </Grid>
-      <Box sx={{ m: 5 }} />
+      </Box>
     </BodyLayout >
   )
 }

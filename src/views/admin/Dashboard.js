@@ -1,25 +1,27 @@
-import { Breadcrumbs, Card, CardActions, Divider, Grid, Link, Paper, Stack, Typography } from '@mui/material';
+import { Breadcrumbs, Card, CardActions, Container, Divider, Grid, Link, Paper, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system'
 import React from 'react'
 import BodyLayout from '../common/BodyLayout'
 import { MdHowToVote } from 'react-icons/md'
 import Chart from "react-apexcharts";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import ContainerLabel from '../../components/ContainerLabel';
+import CardStats from '../../components/CardStats';
 
-const StatsCard = (props) => {
-  const { number, title, color } = props;
-  return <>
-    <Paper sx={{ background: `${color}`, p: 2, borderRadius: '10px', display: 'flex', justifyContent: 'space-between' }}>
-      <Box>
-        <Typography variant='h4'>{number}</Typography>
-        <Typography variant='subtitle1' sx={{ color: 'gray', fontWeight: 'bold' }} >{title}</Typography>
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-        <MdHowToVote style={{ fontSize: '250%' }} />
-      </Box>
-    </Paper>
-  </>
-}
+// const StatsCard = (props) => {
+//   const { number, title, color } = props;
+//   return <>
+//     <Paper sx={{ background: `${color}`, p: 2, borderRadius: '10px', display: 'flex', justifyContent: 'space-between' }}>
+//       <Box>
+//         <Typography variant='h4'>{number}</Typography>
+//         <Typography variant='subtitle1' sx={{ color: 'gray', fontWeight: 'bold' }} >{title}</Typography>
+//       </Box>
+//       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+//         <MdHowToVote style={{ fontSize: '250%' }} />
+//       </Box>
+//     </Paper>
+//   </>
+// }
 
 
 const StatsChart = (props) => {
@@ -58,45 +60,44 @@ const StatsChart = (props) => {
 export default function Dashboard() {
   return (
     <BodyLayout>
-      <Box sx={{ mx: 2, mb: 4, mt: 10 }}>
-        <StatsHeading label="Top Trending" />
+      <Container sx={{ mb: 4,  }}>
+        <ContainerLabel label="Top Trending" />
         <Grid container spacing={2} >
           <Grid item xs={6} sm={3} >
-            <StatsCard number="400k" title="Total Voters" color="salmon" />
+            <CardStats heading1="400k" heading2="Total Voters" />
           </Grid>
           <Grid item xs={6} sm={3}>
-            <StatsCard number="400k" title="Total Voters" color="yellow" />
+            <CardStats heading1="400k" heading2="Total Voters" />
           </Grid>
           <Grid item xs={6} sm={3}>
-            <StatsCard number="400k" title="Total Voters" color="light-blue" />
+            <CardStats heading1="400k" heading2="Total Voters" />
           </Grid>
           <Grid item xs={6} sm={3}>
-            <StatsCard number="400k" title="Total Voters" color="orange" />
+            <CardStats heading1="400k" heading2="Total Voters" />
           </Grid>
         </Grid>
-      </Box>
+      </Container>
       <Divider />
 
-      <Box>
-        <StatsHeading label="All Votings" />
-
+      <Container>
+        <ContainerLabel label="Voting Per Day" />
         <StatsChart />
-      </Box>
+      </Container>
 
     </BodyLayout>
   )
 }
 
 
-const StatsHeading = (props) => {
-  const { label } = props;
+// const StatsHeading = (props) => {
+//   const { label } = props;
 
-  return (
-    <Box sx={{ borderRadius: '10px', border: '1px solid gray', p: 3, m: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Typography fontWeight='bold' >{label}</Typography>
-    </Box>
-  )
-}
+//   return (
+//     <Box sx={{ borderRadius: '10px', border: '1px solid gray', p: 3, m: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+//       <Typography fontWeight='bold' >{label}</Typography>
+//     </Box>
+//   )
+// }
 
 
 // const MyBreadcrumb = () => {

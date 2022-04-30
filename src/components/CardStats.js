@@ -22,7 +22,7 @@ export default function CardStats(props) {
   } else if (iconName === 'RiNumber1') {
     Icon = <RiNumber1 style={{ fontSize: '250%' }} />
   } else {
-
+    Icon = <></>
   }
 
   let styles = {
