@@ -4,7 +4,7 @@ import React from 'react'
 import img404 from './../assets/images/404.jpg';
 import img500 from './../assets/images/500.jpg';
 import { BiArrowBack } from 'react-icons/bi'
-import BodyLayout from './common/BodyLayout';
+import BodyLayout from '../components/BodyLayout';
 
 export default function Error(props) {
   const { errorCode } = props;

@@ -8,37 +8,31 @@ import postImg from './../../assets/images/post.jpeg';
 import BodyLayout from '../../components/BodyLayout';
 
 export default function Blog() {
-  const [addBlog, setAddBlog] = useState(false);
   const [readBlog, setReadBlog] = useState(false);
-  const [deleteBlog, setDeleteBlog] = useState(false);
 
   return (
     <BodyLayout>
       <Container sx={{ my: 5 }} >
-        <Box className="flex " >
-          <Box sx={{ flexGrow: 1 }}></Box>
-          <Button onClick={() => setAddBlog(true)} variant='outlined' startIcon={<IoMdAdd />}> Add Blog</Button>
-        </Box>
         <Box>
           <ContainerLabel label="All Blogs" />
           <Grid container spacing={3}>
             <Grid item xs={12} sm={3} >
               <CardStats2
-                cardActions={[{ label: 'read_more', fun: setReadBlog }, { label: 'delete', fun: setDeleteBlog }]}
+                cardActions={[{ label: 'read_more', fun: setReadBlog }]}
                 heading={'haeding lol'}
                 subject={'skjdnfj sodjfohs iosdhfoh '}
               />
             </Grid>
             <Grid item xs={12} sm={3} >
               <CardStats2
-                cardActions={[{ label: 'read_more', fun: setReadBlog }, { label: 'delete', fun: setDeleteBlog }]}
+                cardActions={[{ label: 'read_more', fun: setReadBlog }]}
                 heading={'haeding lol'}
                 subject={'skjdnfj sodjfohs iosdhfoh '}
               />
             </Grid>
             <Grid item xs={12} sm={3} >
               <CardStats2
-                cardActions={[{ label: 'read_more', fun: setReadBlog }, { label: 'delete', fun: setDeleteBlog }]}
+                cardActions={[{ label: 'read_more', fun: setReadBlog }]}
                 heading={'haeding lol'}
                 subject={'skjdnfj sodjfohs iosdhfoh '}
               />
@@ -46,39 +40,6 @@ export default function Blog() {
           </Grid>
         </Box>
       </Container>
-      <MuiModal open={addBlog} setOpen={setAddBlog} title={'Add Blog'} cardActions={['submit']}  >
-        <Box sx={{ my: 3 }} >
-          <TextField fullWidth id="outlined-basic" label="Heading" variant="outlined" />
-        </Box>
-        <Box>
-          <TextareaAutosize
-            aria-label="empty textarea"
-            placeholder="Paragraph 1"
-            minRows={3}
-            style={{ width: "88%", marginBottom: '20px', padding: "20px" }}
-          />
-        </Box>
-        <Box>
-          <TextareaAutosize
-            aria-label="empty textarea"
-            placeholder="Paragraph 2"
-            minRows={3}
-            style={{ width: "88%", marginBottom: '20px', padding: "20px" }}
-          />
-        </Box>
-        <Box>
-          <TextareaAutosize
-            aria-label="empty textarea"
-            placeholder="Paragraph 3 (Optional)"
-            minRows={3}
-            style={{ width: "88%", marginBottom: '20px', padding: "20px" }}
-          />
-        </Box>
-        <Box>
-          <TextField type="file" />
-        </Box>
-      </MuiModal>
-
       <MuiModal open={readBlog} setOpen={setReadBlog} title={'Blog Title'} >
         <Box sx={{ maxHeight: "200px", maxWidth: "320px", p: 1 }} className="flex justifyCenter alignCenter" >
           <img alt='blog img' src={postImg} style={{ width: "100%", height: "100%", objectFit: "cover" }} />

@@ -3,8 +3,8 @@ import { Box, Button, Card, Container, InputAdornment, TextField } from '@mui/ma
 import { AiOutlineLogin } from 'react-icons/ai';
 import { CgRename } from 'react-icons/cg';
 import { MdAlternateEmail, MdPassword } from 'react-icons/md';
-import BodyLayout from '../common/BodyLayout';
 import signupImg from './../../assets/images/signup.png';
+import BodyLayout from '../../components/BodyLayout';
 
 export default function Signup() {
   const [name, setName] = useState('');

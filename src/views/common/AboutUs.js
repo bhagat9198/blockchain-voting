@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography } from '@mui/material'
 import React from 'react'
+import BodyLayout from '../../components/BodyLayout';
 import userImg from './../../assets/images/u1.png';
-import BodyLayout from './BodyLayout';
 
 export default function AboutUs() {
   return (

@@ -1,10 +1,10 @@
 import { Box, Button, Container, Divider, Grid } from '@mui/material'
 import React from 'react'
+import BodyLayout from '../../components/BodyLayout'
 import CardStats1 from '../../components/CardStats1'
 import CardStats2 from '../../components/CardStats2'
 import CardStats3 from '../../components/CardStats3'
 import ContainerLabel from '../../components/ContainerLabel'
-import BodyLayout from '../common/BodyLayout'
 
 export default function Dashbord() {
   return (

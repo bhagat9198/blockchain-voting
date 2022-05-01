@@ -2,7 +2,7 @@ import { Box, Button, Card, Container, InputAdornment, TextField } from '@mui/ma
 import React, { useState } from 'react'
 import { AiOutlineLogin } from 'react-icons/ai';
 import { MdAlternateEmail, MdPassword } from 'react-icons/md';
-import BodyLayout from '../common/BodyLayout';
+import BodyLayout from '../../components/BodyLayout';
 import loginImg from './../../assets/images/login1.jpg';
 
 export default function Login() {

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Grid, Box, Container, Typography, Divider, Card, TextField, Button, TableContainer, Table, TableHead, TableRow, TableCell, Paper, TableBody } from '@mui/material'
 import userImg from './../../assets/images/u2.jpg';
-import BodyLayout from '../common/BodyLayout';
 import { AiOutlineDelete } from 'react-icons/ai';
 import BasicProfileInfo from './../../components/BasicProfileInfo';
+import BodyLayout from '../../components/BodyLayout';
 
 export default function Profile() {
   return (

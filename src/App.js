@@ -18,6 +18,12 @@ import AnnouncementAdmin from './views/admin/Announcement';
 import DonateAdmin from './views/admin/Donate';
 import BlogAdmin from './views/admin/Blog';
 import BlogElectionParty from './views/electionParty/Blog';
+import BlogVoter from './views/voter/Blog';
+import ResultVoter from './views/voter/Result';
+import VoteVoter from './views/voter/Vote';
+import VoteElectionParty from './views/electionParty/Vote';
+import ResultElectionParty from './views/electionParty/Result';
+
 
 const loading = (
   <div className="pt-3 text-center">
@@ -41,8 +47,13 @@ export default function App() {
           <Route exact path='/admin/donate' element={<DonateAdmin />} />
           <Route exact path='/admin/blog' element={<BlogAdmin />} />
           <Route exact path='/admin' element={<DashboardAdmin />} />
-          <Route exact path='/voter' element={<DashboardVoter />} />
+          <Route exact path='/voter/result' element={<ResultVoter />} />
+          <Route exact path='/voter/vote' element={<VoteVoter />} />
+          <Route exact path='/voter/blog' element={<BlogVoter />} />
           <Route exact path='/voter/profile' element={<ProfileVoter />} />
+          <Route exact path='/voter' element={<DashboardVoter />} />
+          <Route exact path='/election-party/result' element={<ResultElectionParty />} />
+          <Route exact path='/election-party/vote' element={<VoteElectionParty />} />
           <Route exact path='/election-party/blog' element={<BlogElectionParty />} />
           <Route exact path='/election-party' element={<DashboardElectionParty />} />
           <Route exact path='/404' element={<Error errorCode="404" />} />

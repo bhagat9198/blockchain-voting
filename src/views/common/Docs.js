@@ -1,6 +1,6 @@
 import { Container, Divider, Grid, Typography } from '@mui/material'
 import React from 'react'
-import BodyLayout from './BodyLayout';
+import BodyLayout from '../../components/BodyLayout'
 import projectScope from './../../assets/images/projectScope.jpeg'
 
 

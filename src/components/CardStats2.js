@@ -7,7 +7,21 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 import postImg from './../assets/images/post.jpeg';
 
 export default function CardStats2(props) {
-  const {heading, subject} = props;
+  const { heading, subject, cardActions} = props;
+  let cardActionsCont = <></>;
+
+  if(cardActions && cardActions.length > 0) {
+    cardActionsCont = cardActions.map(action => {
+      if (action.label === 'read_more') {
+        return <Button size="small"  onClick={() => action.fun(true)} color="primary"> Read Complete </Button>
+      } else if (action.label === 'delete') {
+        return <Button size="small" onClick={() => action.fun(true)} sx={{ color: 'red' }}> Delete </Button>
+      } else {
+        return <></>
+      }
+    })
+  }
+
   return (
     <Card >
       <CardActionArea>
@@ -27,9 +41,7 @@ export default function CardStats2(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Read Complete
-        </Button>
+        {cardActionsCont}
       </CardActions>
     </Card>
   );
