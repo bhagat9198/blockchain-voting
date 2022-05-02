@@ -28,6 +28,13 @@ const initialState = {
     "Uttar Pradesh",
     "Uttarakhand",
     "West Bengal"
+  ],
+  t_c: [
+    "One must be above 18 years of age",
+    "One must be a Citizen of India",
+    "You can cast just one vote.",
+    "You can vote only at your registered constituency.",
+    "You must have Voter ID or EPIC card or photo identity election card."
   ]
 }
 

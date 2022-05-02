@@ -4,9 +4,11 @@ import BodyLayout from '../../components/BodyLayout'
 import ContainerLabel from '../../components/ContainerLabel'
 import MuiAccordion from '../../components/MuiAccordion'
 
-export default function Donate() {
+export default function Donate(props) {
+  const { userType } = props;
+
   return (
-    <BodyLayout>
+    <BodyLayout userType={userType} >
       <Container className='flex alignCenter' >
         <Container sx={{ width: "90%" }} >
           <Box sx={{ my: 3 }} >

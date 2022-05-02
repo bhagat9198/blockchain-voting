@@ -9,6 +9,39 @@ import CardStats from '../../components/CardStats';
 import BodyLayout from '../../components/BodyLayout';
 
 
+export default function Dashboard(props) {
+  const { userType } = props;
+
+  return (
+    <BodyLayout userType={userType} >
+      <Container sx={{ mb: 4,  }}>
+        <ContainerLabel label="Top Trending" />
+        <Grid container spacing={2} >
+          <Grid item xs={6} sm={3} >
+            <CardStats heading1="400k" heading2="Total Voters" />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <CardStats heading1="400k" heading2="Total Voters" />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <CardStats heading1="400k" heading2="Total Voters" />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <CardStats heading1="400k" heading2="Total Voters" />
+          </Grid>
+        </Grid>
+      </Container>
+      <Divider />
+
+      <Container>
+        <ContainerLabel label="Voting Per Day" />
+        <StatsChart />
+      </Container>
+
+    </BodyLayout>
+  )
+}
+
 const StatsChart = (props) => {
   let state = {
     options: {
@@ -40,35 +73,4 @@ const StatsChart = (props) => {
     </div>
   </div>)
 
-}
-
-export default function Dashboard() {
-  return (
-    <BodyLayout>
-      <Container sx={{ mb: 4,  }}>
-        <ContainerLabel label="Top Trending" />
-        <Grid container spacing={2} >
-          <Grid item xs={6} sm={3} >
-            <CardStats heading1="400k" heading2="Total Voters" />
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <CardStats heading1="400k" heading2="Total Voters" />
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <CardStats heading1="400k" heading2="Total Voters" />
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <CardStats heading1="400k" heading2="Total Voters" />
-          </Grid>
-        </Grid>
-      </Container>
-      <Divider />
-
-      <Container>
-        <ContainerLabel label="Voting Per Day" />
-        <StatsChart />
-      </Container>
-
-    </BodyLayout>
-  )
 }

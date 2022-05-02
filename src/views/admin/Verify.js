@@ -7,10 +7,11 @@ import MuiModal from '../../components/MuiModal';
 import BodyLayout from '../../components/BodyLayout';
 import MuiTabs from '../../components/MuiTabs';
 
-export default function Verify() {
+export default function Verify(props) {
+  const { userType } = props;
 
   return (
-    <BodyLayout>
+    <BodyLayout userType={userType} >
       <MuiTabs tabs={[{ label: 'Voters', comp: <AllCards /> }, { label: 'Electorl Party', comp: <AllCards /> }]} />
     </BodyLayout>
   )

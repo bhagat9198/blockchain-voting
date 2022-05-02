@@ -7,11 +7,12 @@ import MuiModal from '../../components/MuiModal';
 import postImg from './../../assets/images/post.jpeg';
 import BodyLayout from '../../components/BodyLayout';
 
-export default function Blog() {
+export default function Blog(props) {
+  const { userType } = props;
   const [readBlog, setReadBlog] = useState(false);
 
   return (
-    <BodyLayout>
+    <BodyLayout userType={userType} >
       <Container sx={{ my: 5 }} >
         <Box>
           <ContainerLabel label="All Blogs" />

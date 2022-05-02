@@ -3,8 +3,14 @@ import React from 'react'
 import BodyLayout from '../../components/BodyLayout'
 import projectScope from './../../assets/images/projectScope.jpeg'
 
+const moto = [
+  "An authority must conduct the elections, who should be free of political interference",
+  "A set of laws is required to govern the elections. The authority in charge of conducting the elections will hold these laws",
+  "A redressal mechanism for the resolution of doubts and disputes that arise out of the elections "
+]
 
 export default function Docs() {
+  
   return (
     <BodyLayout>
       <Container sx={{py: 3}}>

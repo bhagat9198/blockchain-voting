@@ -111,7 +111,7 @@ const headCells = [
   },
 ];
 
-function AdvanceTableHead(props) {
+function MuiTableAdvanceHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
     props;
   const createSortHandler = (property) => (event) => {
@@ -158,7 +158,7 @@ function AdvanceTableHead(props) {
   );
 }
 
-AdvanceTableHead.propTypes = {
+MuiTableAdvanceHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
@@ -167,9 +167,8 @@ AdvanceTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const AdvanceTableToolbar = (props) => {
+const MuiTableAdvanceToolbar = (props) => {
   const { numSelected } = props;
-
   return (
     <Toolbar
       sx={{
@@ -218,11 +217,11 @@ const AdvanceTableToolbar = (props) => {
   );
 };
 
-AdvanceTableToolbar.propTypes = {
+MuiTableAdvanceToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function AdvanceTable(props) {
+export default function MuiTableAdvance(props) {
   const {columns, rowsData} = props;
 
   const [order, setOrder] = React.useState('asc');
@@ -295,14 +294,14 @@ export default function AdvanceTable(props) {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <AdvanceTableToolbar numSelected={selected.length} />
+        <MuiTableAdvanceToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >
-            <AdvanceTableHead
+            <MuiTableAdvanceHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}

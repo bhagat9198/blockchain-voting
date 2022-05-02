@@ -7,13 +7,15 @@ import MuiModal from '../../components/MuiModal';
 import postImg from './../../assets/images/post.jpeg';
 import BodyLayout from '../../components/BodyLayout';
 
-export default function Blog() {
+export default function Blog(props) {
+  const { userType } = props;
+
   const [addBlog, setAddBlog] = useState(false);
   const [readBlog, setReadBlog] = useState(false);
   const [deleteBlog, setDeleteBlog] = useState(false);
 
   return (
-    <BodyLayout>
+    <BodyLayout userType={userType} >
       <Container sx={{ my: 5 }} >
         <Box className="flex " >
           <Box sx={{ flexGrow: 1 }}></Box>

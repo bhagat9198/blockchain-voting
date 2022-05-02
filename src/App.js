@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import Login from './views/auth/Login'
 import './assets/css/global.css';
 import Signup from './views/auth/Signup';
@@ -32,35 +32,40 @@ const loading = (
 )
 
 export default function App() {
+  const location = useLocation();
+  console.log('App :: location :: ', location);
+
+  const path = location.pathname;
+  const userType = (path.split('/')[1]).toLowerCase();
+  // console.log('App :: userType :: ', userType);
+
   return (
-    <BrowserRouter>
       <Suspense fallback={loading} >
-        <Routes>
+        <Routes  >
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/about-us' element={<AboutUs />} />
           <Route exact path='/docs' element={<Docs />} />
           <Route exact path='/signup' element={<Signup />} />
-          <Route exact path='/admin/verify' element={<VerifyAdmin />} />
-          <Route exact path='/admin/profile' element={<ProfileAdmin />} />
-          <Route exact path='/admin/result' element={<ResultAdmin />} />
-          <Route exact path='/admin/announcement' element={<AnnouncementAdmin />} />
-          <Route exact path='/admin/donate' element={<DonateAdmin />} />
-          <Route exact path='/admin/blog' element={<BlogAdmin />} />
-          <Route exact path='/admin' element={<DashboardAdmin />} />
-          <Route exact path='/voter/result' element={<ResultVoter />} />
-          <Route exact path='/voter/vote' element={<VoteVoter />} />
-          <Route exact path='/voter/blog' element={<BlogVoter />} />
-          <Route exact path='/voter/profile' element={<ProfileVoter />} />
-          <Route exact path='/voter' element={<DashboardVoter />} />
-          <Route exact path='/election-party/result' element={<ResultElectionParty />} />
-          <Route exact path='/election-party/vote' element={<VoteElectionParty />} />
-          <Route exact path='/election-party/blog' element={<BlogElectionParty />} />
-          <Route exact path='/election-party' element={<DashboardElectionParty />} />
+          <Route exact path='/admin/verify' element={<VerifyAdmin userType={userType} />} />
+          <Route exact path='/admin/profile' element={<ProfileAdmin userType={userType} />} />
+          <Route exact path='/admin/result' element={<ResultAdmin userType={userType} />} />
+          <Route exact path='/admin/announcement' element={<AnnouncementAdmin userType={userType} />} />
+          <Route exact path='/admin/donate' element={<DonateAdmin userType={userType} />} />
+          <Route exact path='/admin/blog' element={<BlogAdmin userType={userType} />} />
+          <Route exact path='/admin' element={<DashboardAdmin userType={userType} />} />
+          <Route exact path='/voter/result' element={<ResultVoter userType={userType} />} />
+          <Route exact path='/voter/vote' element={<VoteVoter userType={userType} />} />
+          <Route exact path='/voter/blog' element={<BlogVoter userType={userType} />} />
+          <Route exact path='/voter/profile' element={<ProfileVoter userType={userType} />} />
+          <Route exact path='/voter' element={<DashboardVoter userType={userType} />} />
+          <Route exact path='/election-party/result' element={<ResultElectionParty userType={userType} />} />
+          <Route exact path='/election-party/vote' element={<VoteElectionParty userType={userType} />} />
+          <Route exact path='/election-party/blog' element={<BlogElectionParty userType={userType} />} />
+          <Route exact path='/election-party' element={<DashboardElectionParty userType={userType} />} />
           <Route exact path='/404' element={<Error errorCode="404" />} />
           <Route exact path='/500' element={<Error errorCode="500" />} />
           <Route path='*' element={<Error errorCode="404" />} />
         </Routes>
       </Suspense>
-    </BrowserRouter>
   )
 }

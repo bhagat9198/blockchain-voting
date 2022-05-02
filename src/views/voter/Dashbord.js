@@ -6,9 +6,11 @@ import CardStats2 from '../../components/CardStats2'
 import CardStats3 from '../../components/CardStats3'
 import ContainerLabel from '../../components/ContainerLabel'
 
-export default function Dashbord() {
+export default function Dashbord(props) {
+  const { userType } = props;
+
   return (
-    <BodyLayout>
+    <BodyLayout userType={userType} >
       <Container sx={{ pb: 3 }} >
         <ContainerLabel label="Top Annocemnets" />
         <Grid container spacing={3}>

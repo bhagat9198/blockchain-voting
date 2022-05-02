@@ -3,9 +3,11 @@ import React from 'react'
 import BasicProfileInfo from '../../components/BasicProfileInfo'
 import BodyLayout from '../../components/BodyLayout'
 
-export default function Profile() {
+export default function Profile(props) {
+  const { userType } = props;
+
   return (
-    <BodyLayout>
+    <BodyLayout userType={userType} >
       <Box>
         <BasicProfileInfo />
       </Box>
