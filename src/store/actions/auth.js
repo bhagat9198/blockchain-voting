@@ -33,7 +33,28 @@ export const signin = (data) => {
 
     try {
       const res = await axios.post(`${BASE_URL}/auth/signin`, { email, password });
-      console.log('signup :: res :: ', res);
+      console.log('signin :: res :: ', res);
+      if (res.status === 200) {
+
+      } else {
+
+      }
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message
+      }
+    }
+  }
+}
+
+export const resetPassword = (data) => {
+  return async(dispatch, getState) => {
+    const password = data.password;
+
+    try {
+      const res = await axios.post(`${BASE_URL}/auth/reset-password`, { password });
+      console.log('resetPassword :: res :: ', res);
       if (res.status === 200) {
 
       } else {
