@@ -3,6 +3,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const mongoose = require('mongoose');
+const log = require('simple-node-logger').createSimpleLogger('project.log');
 
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
@@ -13,6 +14,8 @@ const errorController = require('./controller/error');
 app.use(express.json())
 const app = express()
 app.use(cors())
+
+log.info('req came  ::');
 
 app.use('/auth', authRoutes);
 app.use('/admin', authRoutes);
