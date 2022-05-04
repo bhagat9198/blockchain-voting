@@ -17,7 +17,8 @@ export const signup = ({ name, email, password, voteCardId, userType }) => {
             name,
             email,
             voteCardId,
-            userType
+            userType,
+            // something
           },
           isVoter: userType === 'voter' ? true : false,
           isElectionParty: userType === 'electionParty' ? true : false,
