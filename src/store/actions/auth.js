@@ -1,21 +1,39 @@
 import axios from 'axios';
 import { BASE_URL } from '../../util';
 
+export const SIGNUP = 'SIGNUP';
 
 
-export const signup = (data) => {
+export const signup = ({ name, email, password, voteCardId, userType }) => {
   return async (dispatch, getState) => {
-    const name = data.name;
-    const email = data.email;
-    const password = data.password;
 
     try {
-      const res = await axios.post(`${BASE_URL}/auth/signup`, { name, email, password });
+      const res = await axios.post(`${BASE_URL}/auth/signup`, { name, email, password, voteCardId, userType });
       console.log('signup :: res :: ', res);
-      if (res.status === 201) {
-
+      if (res.data.status) {
+        await dispatch({
+          type: SIGNUP,
+          userData: {
+            name,
+            email,
+            voteCardId,
+            userType
+          },
+          isVoter: userType === 'voter' ? true : false,
+          isElectionParty: userType === 'electionParty' ? true : false,
+        })
+        return {
+          status: res.data.status,
+          message: res.data.message,
+          data: {
+            userType: userType === 'voter' ? 'voter' : 'election-party'
+          }
+        }
       } else {
-
+        return {
+          status: res.data.status,
+          message: res.data.message
+        }
       }
     } catch (error) {
       return {
@@ -49,7 +67,7 @@ export const signin = (data) => {
 }
 
 export const resetPassword = (data) => {
-  return async(dispatch, getState) => {
+  return async (dispatch, getState) => {
     const password = data.password;
 
     try {

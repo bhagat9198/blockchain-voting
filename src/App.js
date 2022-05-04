@@ -1,5 +1,8 @@
 import React, { Suspense } from 'react'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Route, Routes, useLocation, useParams } from 'react-router-dom'
+
 import Login from './views/auth/Login'
 import './assets/css/global.css';
 import Signup from './views/auth/Signup';
@@ -7,7 +10,6 @@ import DashboardAdmin from './views/admin/Dashboard';
 import DashboardVoter from './views/voter/Dashbord';
 import DashboardElectionParty from './views/electionParty/Dashboard';
 import ProfileVoter from "./views/voter/Profile";
-
 import Error from './views/Error';
 import VerifyAdmin from './views/admin/Verify';
 import ProfileAdmin from './views/admin/Profile';
@@ -40,6 +42,19 @@ export default function App() {
   // console.log('App :: userType :: ', userType);
 
   return (
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <Suspense fallback={loading} >
         <Routes  >
           <Route exact path='/login' element={<Login />} />
@@ -67,5 +82,6 @@ export default function App() {
           <Route path='*' element={<Error errorCode="404" />} />
         </Routes>
       </Suspense>
+    </>
   )
 }

@@ -20,6 +20,7 @@ import { MdOutlineDashboard, MdOutlineSpeakerPhone } from 'react-icons/md';
 import { FaBloggerB, FaDonate } from 'react-icons/fa';
 import { GiPodiumWinner } from 'react-icons/gi';
 import { GoVerified } from 'react-icons/go';
+import Footer from './Footer';
 
 
 const drawerWidth = 240;
@@ -82,50 +83,53 @@ function BodyLayout(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      {props?.hideNav ? <></> : <Header hideDrawer={props?.hideDrawer ? true : false} handleDrawerToggle={handleDrawerToggle} />}
-      {!props?.hideDrawer && <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      >
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }} >
+      <Box sx={{ display: 'flex', flexGrow: 1 }}>
+        <CssBaseline />
+        {props?.hideNav ? <></> : <Header hideDrawer={props?.hideDrawer ? true : false} handleDrawerToggle={handleDrawerToggle} />}
+        {!props?.hideDrawer && <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          aria-label="mailbox folders"
         >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-          open
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+          >
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            }}
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Box>}
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
         >
-          {drawer}
-        </Drawer>
-      </Box>}
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-      >
-        <Toolbar />
-        <Box>
-          {children}
-        </Box>
+          <Toolbar />
+          <Box>
+            {children}
+          </Box>
 
+        </Box>
       </Box>
+      <Footer hideDrawer={props?.hideDrawer ? true : false} />
     </Box>
   );
 }
