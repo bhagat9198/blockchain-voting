@@ -1,8 +1,9 @@
 const initialState = {
   isAdmin: false,
-  isVoter: false,
+  isVoter:false,
   isElectionParty: false,
   userData: {},
+  
 }
 
 const authRed = (state = initialState, action) => {
