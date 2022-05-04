@@ -19,7 +19,10 @@ import Header from './Header';
 import { MdOutlineDashboard, MdOutlineSpeakerPhone } from 'react-icons/md';
 import { FaBloggerB, FaDonate } from 'react-icons/fa';
 import { GiPodiumWinner } from 'react-icons/gi';
+import { GrInfo } from 'react-icons/gr';
 import { GoVerified } from 'react-icons/go';
+import { AiOutlineUsergroupAdd } from 'react-icons/ai';
+import { BsNewspaper } from 'react-icons/bs';
 import Footer from './Footer';
 
 
@@ -52,7 +55,7 @@ function BodyLayout(props) {
       { label: 'Blog', icon: <FaBloggerB /> },
       { label: 'Donate', icon: <FaDonate /> },
       { label: 'Result', icon: <GiPodiumWinner /> },
-      { label: 'Verify', icon: <GoVerified /> }
+      { label: 'Get Updated', icon: <BsNewspaper /> },
     ]
   } else {
     navs = [
@@ -61,7 +64,7 @@ function BodyLayout(props) {
       { label: 'Blog', icon: <FaBloggerB /> },
       { label: 'Donate', icon: <FaDonate /> },
       { label: 'Result', icon: <GiPodiumWinner /> },
-      { label: 'Verify', icon: <GoVerified /> }
+      { label: 'Add Party', icon: <AiOutlineUsergroupAdd /> }
     ]
   }
 
