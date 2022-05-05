@@ -33,18 +33,12 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
+  createData('Party A', 'Ajith', 100, 10, 'U.P'),
+  createData('Party B', 'Akhil', 50, 3, 'Karnataka'),
+  createData('Party C', 'Maya', 70, 8, 'M.P'),
+  createData('Party D', 'Raj Mohan', 50, 2, 'Rajesthan'),
+  createData('Party E', 'Vidya B', 10, 1, 'U.K'),
+  createData('Party F', 'Kishor', 80, 8, 'T.N'),
 ];
 
 
@@ -80,39 +74,39 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
+    id: 'Electoral Party Name',
     numeric: false,
     disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: 'Electoral Party Name',
   },
   {
-    id: 'calories',
+    id: 'Candidate Name',
     numeric: true,
     disablePadding: false,
-    label: 'Calories',
+    label: 'Candidate Name',
   },
   {
-    id: 'fat',
+    id: 'Votes',
     numeric: true,
     disablePadding: false,
-    label: 'Fat (g)',
+    label: 'Votes',
   },
   {
-    id: 'carbs',
+    id: 'Seats',
     numeric: true,
     disablePadding: false,
-    label: 'Carbs (g)',
+    label: 'Seats',
   },
   {
-    id: 'protein',
+    id: 'Place',
     numeric: true,
     disablePadding: false,
-    label: 'Protein (g)',
+    label: 'Place',
   },
 ];
 
 function MuiTableAdvanceHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, isCkeckboxReq } =
     props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -122,7 +116,7 @@ function MuiTableAdvanceHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
+          {isCkeckboxReq && <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -130,7 +124,7 @@ function MuiTableAdvanceHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
-          />
+          />}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -222,7 +216,7 @@ MuiTableAdvanceToolbar.propTypes = {
 };
 
 export default function MuiTableAdvance(props) {
-  const {columns, rowsData} = props;
+  const { columns, rowsData, isCkeckboxReq } = props;
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -308,6 +302,7 @@ export default function MuiTableAdvance(props) {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              isCkeckboxReq={isCkeckboxReq == false ? false : true}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
@@ -327,13 +322,13 @@ export default function MuiTableAdvance(props) {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox
+                        {isCkeckboxReq == false ? <></> : <Checkbox
                           color="primary"
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
-                        />
+                        />}
                       </TableCell>
                       <TableCell
                         component="th"

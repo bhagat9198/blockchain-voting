@@ -15,18 +15,14 @@ export default function Dashbord(props) {
         <ContainerLabel label="Top Annocemnets" />
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <CardStats1 iconName={'RiNumber0'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
-            <CardStats1 iconName={'RiNumber1'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
-            <CardStats1 iconName={'RiNumber2'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
-            <CardStats1 iconName={'RiNumber3'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
-            <CardStats1 iconName={'RiNumber4'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
+            <CardStats1 iconName={'RiNumber0'} heading1={'Registeration'} heading2={'Kick start of voting session'} date={'20th Jan'} />
+            <CardStats1 iconName={'RiNumber1'} heading1={'Verification'} heading2={'User needs to verify before vote'} date={'30th Jan'} />
+            <CardStats1 iconName={'RiNumber2'} heading1={'Wait is over'} heading2={'Voting session will being in fews days'} date={'28 Feb'} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <CardStats1 iconName={'RiNumber5'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
-            <CardStats1 iconName={'RiNumber6'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
-            <CardStats1 iconName={'RiNumber7'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
-            <CardStats1 iconName={'RiNumber8'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
-            <CardStats1 iconName={'RiNumber9'} heading1={'heading0'} heading2={'heading20'} date={'22nd March'} />
+            <CardStats1 iconName={'RiNumber3'} heading1={'Rules '} heading2={'Before you vote , make sure vote properly as only vote can be given'} date={'10th March'} />
+            <CardStats1 iconName={'RiNumber4'} heading1={'No crowd celebration'} heading2={'Keeping covid in mind, no celebration should be done'} date={'30th March'} />
+            <CardStats1 iconName={'RiNumber5'} heading1={'Results'} heading2={'Voting results will be opening shortl. Stay Tuned. '} date={'1st Aprail'} />
           </Grid>
         </Grid>
       </Container>
@@ -42,16 +38,16 @@ export default function Dashbord(props) {
         <ContainerLabel label="Top Blogs" />
         <Grid container spacing={2}>
           <Grid item sx={12} sm={3}>
-            <CardStats2 heading={'heading '} subject={'jsdhf jhdasfoid hoiashdfos '} />
+            <CardStats2 heading={'Why Voting is important? '} subject={'making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classica'} />
           </Grid>
           <Grid item sx={12} sm={3}>
-            <CardStats2 heading={'heading '} subject={'jsdhf jhdasfoid hoiashdfos '} />
+            <CardStats2 heading={'How to Vote on website? '} subject={'making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classica'} />
           </Grid>
           <Grid item sx={12} sm={3}>
-            <CardStats2 heading={'heading '} subject={'jsdhf jhdasfoid hoiashdfos '} />
+            <CardStats2 heading={'Vote is right and duty of everyone'} subject={'making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classica'} />
           </Grid>
           <Grid item sx={12} sm={3}>
-            <CardStats2 heading={'heading '} subject={'jsdhf jhdasfoid hoiashdfos '} />
+            <CardStats2 heading={'Voting on blockchain is good'} subject={'making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classica'} />
           </Grid>
         </Grid>
       </Container>
@@ -60,16 +56,16 @@ export default function Dashbord(props) {
         <ContainerLabel label="Donate" />
         <Grid container spacing={2}>
           <Grid item sx={12} sm={3}>
-            <CardStats3 name={'heading '} cause={'jsdhf jhdasfoid hoiashdfos '} />
+            <CardStats3 name={'Party A '} cause={'This money will be used to feed poor children'} />
           </Grid>
           <Grid item sx={12} sm={3}>
-            <CardStats3 name={'heading '} cause={'jsdhf jhdasfoid hoiashdfos '} />
+            <CardStats3 name={'Party B '} cause={'Building the community centers throughout the state'} />
           </Grid>
           <Grid item sx={12} sm={3}>
-            <CardStats3 name={'heading '} cause={'jsdhf jhdasfoid hoiashdfos '} />
+            <CardStats3 name={'Party C '} cause={'Its high time thatr covid patice should get some stable earing who cant work.'} />
           </Grid>
           <Grid item sx={12} sm={3}>
-            <CardStats3 name={'heading '} cause={'jsdhf jhdasfoid hoiashdfos '} />
+            <CardStats3 name={'Party D '} cause={'Education has great power. Wellfare cause for teaching the poor children for free.'} />
           </Grid>
         </Grid>
       </Container>

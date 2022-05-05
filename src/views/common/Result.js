@@ -1,5 +1,5 @@
 import { Box, Button, Container, Divider, FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import CardStats from '../../components/CardStats'
 import ContainerLabel from '../../components/ContainerLabel'
 import MuiTableAdvance from '../../components/MuiTableAdvance'
@@ -26,9 +26,9 @@ export default function Result() {
       <Grid item sx={12} sm={3} style={{ minWidth: '250px', borderRight: '1px solid #DDD', }} >
         <Container>
           <ContainerLabel label="Top Leading Parties" />
-          <CardStats heading1={'Party 1'} heading2={'Name 1'} iconName={'RiNumber1'} style={{ m: 2 }} />
-          <CardStats heading1={'Party 1'} heading2={'Name 1'} iconName={'RiNumber2'} style={{ m: 2 }} />
-          <CardStats heading1={'Party 1'} heading2={'Name 1'} iconName={'RiNumber3'} style={{ m: 2 }} />
+          <CardStats heading1={'Party A'} heading2={'Ajiith'} iconName={'RiNumber1'} style={{ m: 2 }} />
+          <CardStats heading1={'Party B'} heading2={'Akhil'} iconName={'RiNumber2'} style={{ m: 2 }} />
+          <CardStats heading1={'Party c'} heading2={'Govindha'} iconName={'RiNumber3'} style={{ m: 2 }} />
         </Container>
       </Grid>
       <Grid item sx={12} sm={9} >
@@ -78,7 +78,7 @@ export default function Result() {
               </Grid>
             </Grid>
             <Box sx={{ py: 5 }} >
-              <MuiTableAdvance />
+              <MuiTableAdvance isCkeckboxReq={false} />
             </Box>
           </Box>
         </Container>

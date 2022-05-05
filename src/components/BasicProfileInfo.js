@@ -1,7 +1,7 @@
 import { Box, Button, Card, Container, Grid, TextField, Typography } from '@mui/material'
 import React from 'react'
 import ContainerLabel from './ContainerLabel'
-import userImg from './../assets/images/u2.jpg';
+import userImg from './../assets/images/user.png';
 
 export default function BasicProfileInfo() {
   return (
@@ -18,14 +18,14 @@ export default function BasicProfileInfo() {
             <ContainerLabel label="Basic Info" />
             <Box sx={{ m: 1 }}>
               <Typography fontWeight='bold' color='gray' variant='subtitle1'>Name</Typography>
-              <Typography variant='h6'>Dark Alex</Typography>
+              <Typography variant='h6'>Vijay Vikas</Typography>
             </Box>
             <Box sx={{ m: 1 }}>
               <Typography fontWeight='bold' color='gray' variant='subtitle1'>Email</Typography>
-              <Typography variant='h6'>abc@xyz.com</Typography>
+              <Typography variant='h6'>vijay@gmail.com</Typography>
             </Box>
             <Box sx={{ m: 1 }}>
-              <Typography fontWeight='bold' color='gray' variant='subtitle1'>Aadhar Number</Typography>
+              <Typography fontWeight='bold' color='gray' variant='subtitle1'>Voting Id Number</Typography>
               <Typography variant='h6'>1324 7896 8521 6547</Typography>
             </Box>
           </Container>
