@@ -4,9 +4,10 @@ const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const mongoose = require('mongoose');
 const log = require('simple-node-logger').createSimpleLogger('project.log');
+const cookieParser = require("cookie-parser");
 
 const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/admin');
+const adminRoutes = require('./routes/auth');
 const voterRoutes = require('./routes/voter');
 const electionPartyRoutes = require('./routes/electionParty');
 const errorController = require('./controller/error');
@@ -14,6 +15,7 @@ const errorController = require('./controller/error');
 const app = express()
 app.use(express.json())
 app.use(cors())
+app.use(cookieParser());
 
 app.use('/auth', authRoutes);
 app.use("/admin", adminRoutes);
