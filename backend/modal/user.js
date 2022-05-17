@@ -19,10 +19,10 @@ const UserSchema = new mongoose.Schema({
   blogs: {
     type: Array,
   },
-  announcement: {
+  announcements: {
     type: Array,
   },
-  donation: {
+  donations: {
     type: Array,
   },
   createdAt: {
