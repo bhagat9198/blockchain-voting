@@ -4,6 +4,7 @@ import { BASE_URL } from '../../util';
 export const POLL_RESULTS = 'POLL_RESULTS';
 export const VOTE_STATUS = 'VOTE_STATUS';
 export const VOTE_RESULTS_STATUS = 'VOTE_RESULTS_STATUS';
+export const ALL_ADMINS = 'ALL_ADMINS';
 
 
 export const pollResults = (data) => {

@@ -7,13 +7,15 @@ import './index.css';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
-import authRed from './store/reducers/auth';
+import miscellaneousRed from './store/reducers/miscellaneous';
+import userRed from './store/reducers/user';
 import configRed from './store/reducers/config';
 import { BrowserRouter } from 'react-router-dom';
 
 const rootReducer = combineReducers({
-  authRed: authRed,
-  configRed: configRed
+  userRed,
+  miscellaneousRed,
+  configRed
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

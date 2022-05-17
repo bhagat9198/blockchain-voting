@@ -1,24 +1,58 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, Box, Container, Typography, Divider, Card, TextField, Button, TableContainer, Table, TableHead, TableRow, TableCell, Paper, TableBody } from '@mui/material'
 import userImg from './../../assets/images/u2.jpg';
 import { AiOutlineDelete } from 'react-icons/ai';
 import BasicProfileInfo from './../../components/BasicProfileInfo';
 import BodyLayout from '../../components/BodyLayout';
+import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAdmin, getAllAdmins } from '../../store/actions/privliged';
 
 export default function Profile(props) {
   const { userType } = props;
+  const dispatch = useDispatch();
 
   const [addAdminName, setAddAdminName] = useState('');
   const [addAdminEmail, setAddAdminEmail] = useState('');
   const [addAdminPassword, setAddAdminPassword] = useState('');
   const [addAdminCPassword, setAddAdminCPassword] = useState('');
+  const allAdmins = useSelector(state => state.miscellaneousRed.admins);
 
+  useEffect(() => {
+    async function asyncFun() {
+      try {
+        const res = await dispatch(getAllAdmins());
+        if (!res.status) {
+          toast.error(res.message)
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(`Error:: ${error.message}`)
+      }
+    }
 
-  const addAdminHandler = () => {
+    asyncFun();
+  }, [])
+
+  const addAdminHandler = async () => {
+    if (addAdminCPassword !== addAdminPassword) {
+      toast.error('Passwords didnt match');
+      return;
+    }
+
+    try {
+      const res = await dispatch(addAdmin({ name: addAdminName, email: addAdminEmail, password: addAdminPassword }));
+      if (res.status) {
+        toast.success(`New admin added successfully`);
+      } else {
+        toast.error(`Error:: ${res.message}`)
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(`Error:: ${error.message}`)
+    }
 
   }
-
-
 
   return (
     <BodyLayout userType={userType} >
@@ -63,8 +97,7 @@ export default function Profile(props) {
           <Grid item xs={12} sm={8}>
             <Container>
               <StatsHeading label="All Admin's" />
-              <AdminTable />
-
+              <AdminTable allAdmins={allAdmins} />
             </Container>
           </Grid>
         </Grid>
