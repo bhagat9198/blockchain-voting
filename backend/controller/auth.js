@@ -53,7 +53,6 @@ exports.postSignup = async (req, res, next) => {
       id: '',
     }, jwtSecret, { expiresIn: '1h' });
     console.log('postSignup :: token :: ', token);
-    res;
 
     return res.status(201).json({
       message: "Success",
@@ -69,10 +68,54 @@ exports.postSignup = async (req, res, next) => {
 
 };
 
-exports.postSignin = (req, res, next) => {
-  return res.status(200).json({
-    message: "Success",
-  });
+exports.postSignin = async (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  try {
+    const user = User.find({ email });
+    if (!user) {
+      return res.status(200).json({
+        message: "User doesnt exists with specfied email",
+        status: false
+      });
+    }
+
+    let isMatched = false;
+    await bcrypt.compare(password, user.password, function (err, result) {
+      console.log('postSignin :: bcrypt.compare :: result :: ', result);
+      console.log('postSignin :: bcrypt.compare :: err :: ', err);
+      if (err) {
+        return;
+      }
+      isMatched = true
+      // result == true
+    });
+    if (!isMatched) {
+      return res.status(200).json({
+        message: "Email or Password is wrong",
+        status: false
+      });
+    }
+
+    const token = await jwt.cookie('access_token', token).sign({
+      userType: 'foobar',
+      email,
+      id: '',
+    }, jwtSecret, { expiresIn: '1h' });
+    console.log('postSignin :: token :: ', token);
+
+    return res.setHeader({
+      "authorization": token
+    }).status(200).json({
+      message: "Success",
+    });
+  } catch (error) {
+    return res.status(200).json({
+      message: "Error :: " + error.message,
+      status: false
+    });
+  }
 };
 
 exports.postResetPassword = (req, res, next) => { };
@@ -83,3 +126,29 @@ exports.getLogout = (req, res, next) => {
     .status(200)
     .json({ message: "Successfully" });
 };
+
+exports.authorization = (req, res, next) => {
+  // const token = req.cookies.access_token;
+  const header = req.headers['authorization'];
+  // if (!token) {
+  //   return res.sendStatus(403);
+  // }
+  let token;
+  if (header === undefined) {
+    return res.sendStatus(403);
+  } else {
+    const bearer = header.split(' ');
+    token = bearer[1];
+  }
+  try {
+    const data = jwt.verify(token, jwtSecret);
+    console.log('authorization :: data :: ', data);
+    req.userId = data.id;
+    req.userType = data.userType;
+    req.email = data.email;
+    return next();
+  } catch {
+    return res.sendStatus(403);
+  }
+
+}
