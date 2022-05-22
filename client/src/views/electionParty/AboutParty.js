@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, InputAdornment, Paper, TextareaAutosize, TextField } from '@mui/material'
+import { Box, Button, Container, FormControl, Grid, InputAdornment, InputLabel, MenuItem, Paper, Select, TextareaAutosize, TextField } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import BodyLayout from '../../components/BodyLayout'
 import ContainerLabel from '../../components/ContainerLabel'
@@ -9,6 +9,8 @@ import { AiOutlineUpload, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { CgRename } from 'react-icons/cg';
 import { MdEmojiSymbols, MdOutlinePlace } from 'react-icons/md';
 import { BsFillPersonLinesFill } from 'react-icons/bs';
+import { useSelector, useDispatch } from 'react-redux'
+import { updateElectionParty } from '../../store/actions/privliged';
 
 export default function AboutParty(props) {
   const inputFileRef = useRef(null);
@@ -20,6 +22,11 @@ export default function AboutParty(props) {
   const [district, setDistrict] = useState('');
   const [moto, setMoto] = useState('');
   const [vision, setVision] = useState('');
+  const [symbolImg, setSymbolImg] = useState(null);
+  const userRed = useSelector(state => state.userRed);
+  const configRed = useSelector(state => state.configRed);
+
+  const dispatch = useDispatch();
 
   const uploadImgHandler = e => {
     inputFileRef.current.click();
@@ -28,8 +35,8 @@ export default function AboutParty(props) {
   const fileImgChangeHandler = e => {
     if (!e.target.files || e.target.files.length === 0) return;
 
+    setSymbolImg(e.target.files[0])
     const res = imgObjectUrl({ fileImg: e.target.files[0] });
-    console.log('res :: ', res);
     if (res.status) {
       setImgPreview(res.imgObj)
     } else {
@@ -38,10 +45,43 @@ export default function AboutParty(props) {
     }
   }
 
+  const updatePartyInfoHandler = async (e) => {
+    // if (!imgPreview || !name || !symbolName || !candidateName || !state || !district || !moto || !vision) {
+    //   toast.error('Please fill up all the fields and dont forget to upload the party symbol image');
+    //   return;
+    // }
+
+    const formData = new FormData();
+    formData.append('photo', symbolImg);
+    formData.append('partyName', name);
+    formData.append('candidateName', candidateName);
+    formData.append('symbolName', symbolName);
+    formData.append('moto', moto);
+    formData.append('vision', vision);
+    formData.append('state', state);
+    formData.append('district', district);
+    formData.append('userType', userRed.userData.userType);
+
+    const res = await dispatch(updateElectionParty(formData));
+    if (!res.status) {
+      toast.error(res.message);
+      return;
+    }
+    toast.success('Party Info Updated');
+    return;
+  }
+
+
+  const stateHandler = (e) => {
+    // console.log('AboutParty :: stateHandler :: ', e);
+    // console.log('AboutParty :: stateHandler :: ', e.target.value);
+    setState(e.target.value)
+  }
+
   return (
     <BodyLayout>
       <Container>
-        <ContainerLabel label="Add Your Electrol Party" />
+        <ContainerLabel label="Your Electrol Party" />
         <Box sx={{ py: 2 }} />
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
@@ -62,7 +102,7 @@ export default function AboutParty(props) {
                   sx={{ width: '100%' }}
                   required
                   id="outlined-required"
-                  label="Name"
+                  label="Party Name"
                   placeholder="Your Full Name"
                   value={name}
                   InputProps={{ startAdornment: <InputAdornment position="start"><CgRename /></InputAdornment> }}
@@ -74,8 +114,8 @@ export default function AboutParty(props) {
                   sx={{ width: '100%' }}
                   required
                   id="outlined-required"
-                  label="Name"
-                  placeholder="Your Full Name"
+                  label="Party Symbol Name"
+                  placeholder="Party Symbol Name"
                   value={symbolName}
                   InputProps={{ startAdornment: <InputAdornment position="start"><MdEmojiSymbols /></InputAdornment> }}
                   onChange={e => setSymbolName(e.target.value)}
@@ -86,32 +126,47 @@ export default function AboutParty(props) {
                   sx={{ width: '100%' }}
                   required
                   id="outlined-required"
-                  label="Name"
-                  placeholder="Your Full Name"
+                  label="Candidate Name"
+                  placeholder="Main Candidate/MLA Name"
                   value={candidateName}
                   InputProps={{ startAdornment: <InputAdornment position="start"><BsFillPersonLinesFill /></InputAdornment> }}
                   onChange={e => setCandidateName(e.target.value)}
                 />
               </Box>
               <Box sx={{ py: 2 }}>
-                <TextField
+                {/* <TextField
                   sx={{ width: '100%' }}
                   required
                   id="outlined-required"
-                  label="Name"
-                  placeholder="Your Full Name"
+                  label="State"
+                  placeholder="State"
                   value={state}
                   InputProps={{ startAdornment: <InputAdornment position="start"><MdOutlinePlace /></InputAdornment> }}
                   onChange={e => setState(e.target.value)}
-                />
+                /> */}
+
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">State</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={state}
+                    label="State"
+                    onChange={stateHandler}
+                  >
+                    {configRed.states.map(state => <MenuItem value={state}>{state}</MenuItem>)}
+                  </Select>
+                </FormControl>
               </Box>
+
+
               <Box sx={{ py: 2 }}>
                 <TextField
                   sx={{ width: '100%' }}
                   required
                   id="outlined-required"
-                  label="Name"
-                  placeholder="Your Full Name"
+                  label="District"
+                  placeholder="District"
                   value={district}
                   InputProps={{ startAdornment: <InputAdornment position="start"><MdOutlinePlace /></InputAdornment> }}
                   onChange={e => setDistrict(e.target.value)}
@@ -120,7 +175,7 @@ export default function AboutParty(props) {
               <Box sx={{ py: 2 }}>
                 <TextareaAutosize
                   aria-label="empty textarea"
-                  placeholder="Paragraph 1"
+                  placeholder="Whats your party moto"
                   minRows={3}
                   style={{ width: "100%", padding: "20px" }}
                   value={moto}
@@ -131,7 +186,7 @@ export default function AboutParty(props) {
               <Box sx={{ py: 2 }}>
                 <TextareaAutosize
                   aria-label="empty textarea"
-                  placeholder="Paragraph 1"
+                  placeholder="Whats your party vision"
                   minRows={3}
                   style={{ width: "100%", padding: "20px" }}
                   onChange={e => setVision(e.target.value)}
@@ -139,7 +194,7 @@ export default function AboutParty(props) {
                 />
               </Box>
               <Box sx={{ py: 2 }}>
-                <Button fullWidth variant='contained' startIcon={<AiOutlineUsergroupAdd />} >Update Party Info</Button>
+                <Button onClick={updatePartyInfoHandler} fullWidth variant='contained' startIcon={<AiOutlineUsergroupAdd />} >Update Party Info</Button>
               </Box>
             </Paper>
           </Grid>

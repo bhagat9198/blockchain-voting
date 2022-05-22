@@ -15,7 +15,7 @@ export default function MuiList(props) {
     >
       {list && list.map((l, i) => <ListItem disablePadding>
         <ListItemButton
-          selected={selected.index === i}
+          selected={selected?.index === i}
           onClick={(event) => handler({ event: event, index: i, label: l.label })}
         >
           <ListItemIcon>

@@ -1,4 +1,4 @@
-import React, { Suspense, Component } from "react";
+import React, { Suspense, Component, useEffect } from "react";
 // import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
 
@@ -33,7 +33,7 @@ import LatestUpdatesVoter from './views/voter/LatestUpdates';
 import AboutPartyElectionParty from './views/electionParty/AboutParty';
 import Unauthorized from './views/common/Unauthorized';
 import SettingsAdmin from './views/admin/Settings';
-
+import { getAccount, initEthReceiverContract, initEtherSenderContract, initVotingContract, getBalance } from './store/actions/w3Transactions';
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
@@ -42,11 +42,30 @@ const loading = (
 
 export default function App() {
   const location = useLocation();
-  console.log('App :: location :: ', location);
-
   const path = location.pathname;
   const userType = (path.split('/')[1]).toLowerCase();
   // console.log('App :: userType :: ', userType);
+
+  useEffect(() => {
+    // console.log(getWeb3);
+    if (!getWeb3 || !getWeb3.eth) return;
+
+    async function asyncFun() {
+      // get account
+      await getAccount()
+
+      // initlise contracts
+      await initEthReceiverContract();
+      await initEtherSenderContract();
+      await initVotingContract();
+
+      // get balanace
+      await getBalance()
+
+    }
+    asyncFun();
+
+  }, [getWeb3])
 
   return (
     <>

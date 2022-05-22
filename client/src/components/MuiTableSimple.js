@@ -1,7 +1,51 @@
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import React from 'react'
+import { AiOutlineDelete } from 'react-icons/ai';
 
-export default function SimpleTable() {
+export default function MuiTableSimple(props) {
+  const { columns, rowsData } = props;
+
   return (
-    <div>SimpleTable</div>
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            {columns.map(c => <TableCell align="right">{c}</TableCell>)}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rowsData.map((row) => (
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="right">{row.email}</TableCell>
+              <TableCell align="right">{row.createdBy}</TableCell>
+              <TableCell align="right">{row.createdOn}</TableCell>
+              {row?.action?.delete && <TableCell align="right"><Button><AiOutlineDelete /></Button></TableCell>}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }
+
+
+// function createData(name, email, createdOn, createdBy) {
+//   return { name, email, createdOn, createdBy };
+// }
+
+// const rows = [
+//   createData('Dark Alex', 'abc@wer.com', 'Admin 1', '20 Feb'),
+//   createData('Dark Alex', 'abc@wer.com', 'Admin 1', '20 Feb'),
+// ];
+
+
+
+
+
+

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { BASE_URL } from '../../util';
+import { addElectionParty } from './w3Transactions';
 
 // *************************************************** Admin & Election Party *************************************************** //
 // *************************************************** Admin *******************************************************************  //
 
 export const VERIFY = 'VERIFY';
 export const ADD_ADMIN = 'ADD_ADMIN';
+export const ALL_ADMINS = 'ALL_ADMINS';
 export const DELETE_ADMIN = 'DELETE_ADMIN';
 export const VOTE_STATUS = 'VOTE_STATUS';
 export const VOTE_RESULTS_STATUS = 'VOTE_RESULTS_STATUS';
@@ -46,7 +48,10 @@ export const addAdmin = (data) => {
       const res = await axios.post(`${BASE_URL}/admin/add-admin`, { name, email, password });
       console.log('addAdmin :: res :: ', res);
       if (res.status === 201) {
-
+        return {
+          status: true,
+          message: res.message
+        }
       } else {
         return {
           status: false,
@@ -138,12 +143,22 @@ export const getAllAdmins = (data) => {
   return async (dispatch, getState) => {
 
     try {
-      const res = await axios.get(`${BASE_URL}/admin/signup`,);
+      const res = await axios.get(`${BASE_URL}/admin/all-admins`,);
       console.log('getAllAdmins :: res :: ', res);
-      if (res.status === 201) {
-
+      if (res.status === 200) {
+        dispatch({
+          type: ALL_ADMINS,
+          admins: res.data.data.admins
+        })
+        return {
+          status: true,
+          message: res.message
+        }
       } else {
-
+        return {
+          status: false,
+          message: res.message
+        }
       }
     } catch (error) {
       return {
@@ -161,22 +176,25 @@ export const ADD_ELECTION_PARTY = 'UPDATE_ELECTION_PARTY';
 
 export const updateElectionParty = (data) => {
   return async (dispatch, getState) => {
-    const partyName = data.partyName;
-    const candidateName = data.candidateName;
-    const symbolName = data.symbolName;
-    const symbolImg = data.symbolImg;
-    const moto = data.moto;
-    const vision = data.vision;
-    const state = data.state;
-    const district = data.district;
-
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
     try {
-      const res = await axios.post(`${BASE_URL}/election-party/update-party`, { partyName, candidateName, symbolName, symbolImg, moto, vision, state, district });
+      const res = await axios.post(`${BASE_URL}/election-party/update-party`, data, config);
       console.log('updateElectionParty :: res :: ', res);
       if (res.status === 201) {
-
+        await addElectionParty({ id: res.data.data._id })
+        return {
+          status: true,
+          message: res.message
+        }
       } else {
-
+        return {
+          status: false,
+          message: res.message
+        }
       }
     } catch (error) {
       return {

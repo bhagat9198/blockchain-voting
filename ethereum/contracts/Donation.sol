@@ -1,6 +1,6 @@
-pragma solidity ^0.8.3;
+pragma solidity ^0.8.10;
 
-contract SendEther {
+contract EtherSender {
     constructor() payable {}
 
     receive() external payable {}
@@ -20,7 +20,7 @@ contract SendEther {
     }
 }
 
-contract EthReceiver {
+contract EtherReceiver {
     event Log(uint256 amount, uint256 gas);
 
     receive() external payable {

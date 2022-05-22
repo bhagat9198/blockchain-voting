@@ -1,6 +1,6 @@
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.10;
 
-contract Election {
+contract Voting {
     struct Candidate {
         string name;
         uint256 voteCount;
@@ -21,17 +21,21 @@ contract Election {
 
     event ElectionResult(string name, uint256 voteCount);
 
-    constructor(
-        string memory name,
-        string memory candidatel,
-        string memory candidate2
-    ) {
-        owner = msg.sender;
-        name = name;
-        // auctionEnd = now + (durationMinutes * 1 minutes);
+    // function initElection(
+    //   string memory name,
+    //   string memory candidatel,
+    //   string memory candidate2
+    // ) public {
+    //   owner = msg.sender;
+    //   name = name;
+    //   // auctionEnd = now + (durationMinutes * 1 minutes);
 
-        candidates.push(Candidate(candidatel, 0));
-        candidates.push(Candidate(candidate2, 0));
+    //   candidates.push(Candidate(candidatel, 0));
+    //   candidates.push(Candidate(candidate2, 0));
+    // }
+
+    function addParty(string memory partyId) public {
+        candidates.push(Candidate(partyId, 0));
     }
 
     function authorize(address voter) public {
@@ -51,7 +55,7 @@ contract Election {
     }
 
     function end() public {
-        require(msg.sender == owner);
+        // require(msg.sender == owner);
         // require(now >= auctionEnd);
 
         for (uint256 i = 0; i < candidates.length; i++) {

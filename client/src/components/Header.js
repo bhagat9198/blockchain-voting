@@ -1,49 +1,23 @@
-// import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material'
-// import React from 'react'
-
-
-
-// export default function Header(props) {
-//   const { open, handleDrawerOpen } = props;
-
-//   return (
-//     <AppBar sx={{ position: 'sticky' }}>
-//       <Toolbar>
-//         <IconButton
-//           size="large"
-//           edge="start"
-//           color="inherit"
-//           aria-label="menu"
-//           // sx={{ mr: 2 }}
-//           onClick={handleDrawerOpen}
-//           sx={{ mr: 2, ...(open && { display: 'none' }) }}
-//         >
-//           <MenuIcon />
-//         </IconButton>
-//         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-//           Blockchain Voting
-//         </Typography>
-//         <Button color="inherit">Login</Button>
-//       </Toolbar>
-//     </AppBar>
-//   )
-// }
-
-
-
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material'
 import React from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
+import { useSelector } from 'react-redux';
 
 let drawerWidth = 240;
 
 export default function Header(props) {
-  const { handleDrawerToggle, hideDrawer} = props;
+  const { handleDrawerToggle, hideDrawer } = props;
+  const userRed = useSelector(state => state.userRed);
+  let isUserLoggedIn = false;
 
-  if(hideDrawer) {
+  if (userRed.isAdmin || userRed.isVoter || userRed.isElectionParty) {
+    isUserLoggedIn = true;
+  }
+
+  if (hideDrawer) {
     drawerWidth = 0;
   }
-  
+
   return (
     <AppBar
       position="fixed"
@@ -65,7 +39,7 @@ export default function Header(props) {
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           Blockchain Voting
         </Typography>
-        <Button color="inherit">Login</Button>
+        <Button color="inherit">{!isUserLoggedIn ? 'Login' : ''}</Button>
       </Toolbar>
     </AppBar>
   )

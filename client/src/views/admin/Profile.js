@@ -7,6 +7,9 @@ import BodyLayout from '../../components/BodyLayout';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAdmin, getAllAdmins } from '../../store/actions/privliged';
+import MuiTableSimple from '../../components/MuiTableSimple';
+import { getDate } from '../../util';
+import ContainerLabel from '../../components/ContainerLabel';
 
 export default function Profile(props) {
   const { userType } = props;
@@ -16,7 +19,18 @@ export default function Profile(props) {
   const [addAdminEmail, setAddAdminEmail] = useState('');
   const [addAdminPassword, setAddAdminPassword] = useState('');
   const [addAdminCPassword, setAddAdminCPassword] = useState('');
-  const allAdmins = useSelector(state => state.miscellaneousRed.admins);
+  const miscellaneousRed = useSelector(state => state.miscellaneousRed);
+  console.log('Profile :: miscellaneousRed :: ', miscellaneousRed);
+  let allAdmins = miscellaneousRed.admins;
+
+  const updatedAllAdmins = allAdmins.map(admin => {
+    console.log('Profile :: updatedAllAdmins :: admin :: ', admin);
+    // let createdOnDate = getDate(admin.createdAt);
+    let createdOnDate = '22';
+    return { name: admin.name, email: admin.email, createdBy: admin.createdBy, createdOn: createdOnDate, action: { delete: true } }
+  })
+
+  console.log('updatedAllAdmins :: ', updatedAllAdmins);
 
   useEffect(() => {
     async function asyncFun() {
@@ -64,7 +78,7 @@ export default function Profile(props) {
         <Grid container spacing={1} >
           <Grid item xs={12} sm={4}>
             <Container>
-              <StatsHeading label="Add New Admin" />
+              <ContainerLabel label="Add New Admin" />
               <form>
                 <Box sx={{ m: 1 }}>
                   <TextField
@@ -96,8 +110,11 @@ export default function Profile(props) {
           </Grid>
           <Grid item xs={12} sm={8}>
             <Container>
-              <StatsHeading label="All Admin's" />
-              <AdminTable allAdmins={allAdmins} />
+              <ContainerLabel label="All Admin's" />
+              <MuiTableSimple
+                columns={['Name', 'Email', 'Created On', 'Created By', 'Action']}
+                rowsData={updatedAllAdmins}
+              />
             </Container>
           </Grid>
         </Grid>
@@ -106,57 +123,4 @@ export default function Profile(props) {
   )
 }
 
-
-const StatsHeading = (props) => {
-  const { label } = props;
-
-  return (
-    <Box sx={{ borderRadius: '10px', border: '1px solid gray', p: 1, my: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Typography fontWeight='bold' >{label}</Typography>
-    </Box>
-  )
-}
-
-function createData(name, email, createdOn, createdBy) {
-  return { name, email, createdOn, createdBy };
-}
-
-const rows = [
-  createData('Dark Alex', 'abc@wer.com', 'Admin 1', '20 Feb'),
-  createData('Dark Alex', 'abc@wer.com', 'Admin 1', '20 Feb'),
-];
-
-const AdminTable = () => {
-  return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Created on</TableCell>
-            <TableCell align="right">Created By</TableCell>
-            <TableCell align="right">Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">{row.createdBy}</TableCell>
-              <TableCell align="right">{row.createdOn}</TableCell>
-              <TableCell align="right"><Button><AiOutlineDelete /></Button></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  )
-}
 

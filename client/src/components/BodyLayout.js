@@ -76,7 +76,7 @@ function BodyLayout(props) {
     <Divider />
     <List>
       {navs.map((nav) => (
-        <Link to={`${userType}/${nav.to}`}>
+        <Link to={`/${userType}${nav.to}`}>
           <ListItem button key={nav.label}>
             <ListItemIcon>
               {nav.icon}

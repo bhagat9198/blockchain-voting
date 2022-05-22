@@ -1,7 +1,9 @@
+// import { format } from 'date-fns';
+
 let BASE_URL = '';
 
 if (process.env.NODE_ENV === 'development') {
-  BASE_URL = 'http://localhost:5000'
+  BASE_URL = 'http://localhost:7000'
 } else {
   BASE_URL = 'https://blockchain-voting-project.herokuapp.com'
 }
@@ -48,8 +50,16 @@ const imgObjectUrl = ({ fileImg }) => {
 }
 
 
+// const getDate = async ({ timestamp }) => {
+//   const date = new Date(timestamp);
+//   return format(date, 'dd-MMM-yyyy')
+// }
+
+
+
 module.exports.BASE_URL = BASE_URL;
 module.exports.darkColors = darkColors;
 module.exports.lightColors = lightColors;
 module.exports.colorCombinations = colorCombinations;
 module.exports.imgObjectUrl = imgObjectUrl;
+// module.exports.getDate = getDate;

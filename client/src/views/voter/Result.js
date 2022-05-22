@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BodyLayout from '../../components/BodyLayout'
 import ResultCommon from './../common/Result'
 
