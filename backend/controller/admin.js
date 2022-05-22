@@ -62,7 +62,7 @@ exports.getAllAdmins = (req, res, next) => {
       }
     })
   }).catch(error => {
-    return res.status(200).json({
+    return res.status(400).json({
       message: `Error: ${error.message}`,
       status: false
     })
@@ -70,38 +70,50 @@ exports.getAllAdmins = (req, res, next) => {
 
 }
 
-exports.postAddAdmins = (req, res, next) => {
+exports.postAddAdmin = async (req, res, next) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
   const createdAt = new Date().getTime();
 
-  let hashedPwd;
-  await bcrypt.hash(password, bycryptSaltRounds, (err, saltedPwd) => {
-    console.log("saltedPwd :: ", saltedPwd);
-    if (err) {
-      console.log("err :: bcrypt.hash :: ", err.message);
-      return
-    }
-    hashedPwd = saltedPwd;
-  });
+  let hashedPwd = await new Promise((resolve, reject) => {
+    bcrypt.hash(password, bycryptSaltRounds, (err, saltedPwd) => {
+      console.log("saltedPwd :: ", saltedPwd);
+      if (err) {
+        console.log("err :: bcrypt.hash :: ", err.message);
+        return res.status(400).json({
+          message: `Error :: ${err.message}`,
+          status: false
+        })
+      }
+      // hashedPwd = saltedPwd;
+      resolve(saltedPwd)
+    });
+
+  })
+
 
   const newAdmin = new Admin({
     name,
     email,
     password: hashedPwd,
+    blogs: [],
+    announcements: [],
+    donations: [],
     createdAt,
+    createdBy: 'admin'
   });
 
   try {
     const savedAdmin = await newAdmin.save();
     console.log('postAddAdmins :: savedAdmin :: ', savedAdmin);
-    return res.status(200).json({
+    return res.status(201).json({
       message: 'Success',
-      status: true
+      status: true,
+      data: savedAdmin
     })
   } catch (error) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: `Error :: ${error.message}`,
       status: false
     })

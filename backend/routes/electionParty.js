@@ -1,12 +1,9 @@
 const express = require('express');
-const electionPartyController = require('./../controller/electionParty');
+
+const privligedController = require('./../controller/privliged');
 
 const routes = express.Router();
 
-// routes.post('/add-blog', electionPartyController.postAddBlog);
-// routes.post('/add-announcement', electionPartyController.postAddAnnouncement);
-// routes.post('/add-donation', electionPartyController.postAddDonation);
-// routes.post('/add-party', electionPartyController.postAddParty);
-
+routes.post('/update-party', privligedController.partyImg, privligedController.postUpdateElectoralParty);
 
 module.exports = routes;

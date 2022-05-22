@@ -7,7 +7,7 @@ const log = require('simple-node-logger').createSimpleLogger('project.log');
 const cookieParser = require("cookie-parser");
 
 const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
 const voterRoutes = require('./routes/voter');
 const electionPartyRoutes = require('./routes/electionParty');
 const errorController = require('./controller/error');
@@ -24,7 +24,7 @@ app.use("/election-party", electionPartyRoutes);
 // app.use('/', authRoutes);
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 7000;
 
 mongoose.connect(MONGODB_URI).then(async () => {
   return app.listen(PORT)

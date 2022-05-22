@@ -25,9 +25,6 @@ const PartySchema = new mongoose.Schema({
   district: {
     type: String
   },
-  autherId: {
-    type: String
-  },
   userType: {
     type: String
   },

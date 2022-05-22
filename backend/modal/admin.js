@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
+const AdminSchema = new mongoose.Schema({
   name: {
     type: String,
   },
@@ -13,10 +13,10 @@ const UserSchema = new mongoose.Schema({
   blogs: {
     type: Array,
   },
-  announcement: {
+  announcements: {
     type: Array,
   },
-  donation: {
+  donations: {
     type: Array,
   },
   createdAt: {
@@ -28,4 +28,4 @@ const UserSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Admin', UserSchema);
+module.exports = mongoose.model('Admin', AdminSchema);
