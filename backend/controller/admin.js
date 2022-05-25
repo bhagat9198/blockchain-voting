@@ -71,6 +71,7 @@ exports.getAllAdmins = (req, res, next) => {
 }
 
 exports.postAddAdmin = async (req, res, next) => {
+  console.log('postAddAdmin :: req.body :: ', req.body);
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;

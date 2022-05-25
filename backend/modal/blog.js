@@ -10,10 +10,13 @@ const BlogSchema = new mongoose.Schema({
   p2: {
     type: String
   },
+  p3: {
+    type: String
+  },
   imgPath: {
     type: String
   },
-  autherId: {
+  userId: {
     type: String
   },
   userType: {

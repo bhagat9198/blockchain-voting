@@ -32,20 +32,20 @@ export default function Profile(props) {
 
   console.log('updatedAllAdmins :: ', updatedAllAdmins);
 
-  useEffect(() => {
-    async function asyncFun() {
-      try {
-        const res = await dispatch(getAllAdmins());
-        if (!res.status) {
-          toast.error(res.message)
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error(`Error:: ${error.message}`)
+  async function fetchAllAdmins() {
+    try {
+      const res = await dispatch(getAllAdmins());
+      if (!res.status) {
+        toast.error(res.message)
       }
+    } catch (error) {
+      console.log(error);
+      toast.error(`Error:: ${error.message}`)
     }
+  }
 
-    asyncFun();
+  useEffect(() => {
+    fetchAllAdmins();
   }, [])
 
   const addAdminHandler = async () => {
@@ -66,7 +66,10 @@ export default function Profile(props) {
       toast.error(`Error:: ${error.message}`)
     }
 
+    fetchAllAdmins();
   }
+
+
 
   return (
     <BodyLayout userType={userType} >
@@ -83,21 +86,21 @@ export default function Profile(props) {
                 <Box sx={{ m: 1 }}>
                   <TextField
                     fullWidth label="Name" variant="outlined"
-                    onChange={e => setAddAdminName(e.target.name)} />
+                    onChange={e => setAddAdminName(e.target.value)} />
                 </Box>
                 <Box sx={{ m: 1 }}>
                   <TextField fullWidth label="Email" variant="outlined"
-                    onChange={e => setAddAdminEmail(e.target.name)}
+                    onChange={e => setAddAdminEmail(e.target.value)}
                   />
                 </Box>
                 <Box sx={{ m: 1 }}>
                   <TextField fullWidth label="Password" variant="outlined"
-                    onChange={e => setAddAdminPassword(e.target.name)}
+                    onChange={e => setAddAdminPassword(e.target.value)}
                   />
                 </Box>
                 <Box sx={{ m: 1 }}>
                   <TextField fullWidth label="Password" variant="outlined"
-                    onChange={e => setAddAdminCPassword(e.target.name)}
+                    onChange={e => setAddAdminCPassword(e.target.value)}
                   />
                 </Box>
                 <Box sx={{ m: 1 }}>

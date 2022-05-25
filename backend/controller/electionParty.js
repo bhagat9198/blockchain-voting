@@ -1,37 +1,7 @@
 const multer = require('multer');
 const uniqid = require('uniqid');
 
-const PartyModal = require('./../modal/party');
-
-
-// *************************************************** Admin *******************************************************************  //
-
-
-exports.postAddBlog = (req, res, next) => {
-  return res.status(200).json({
-    message: 'Success'
-  })
-}
-
-exports.postAddAnnouncement = (req, res, next) => {
-  return res.status(200).json({
-    message: 'Success'
-  })
-}
-
-exports.postAddDonation = (req, res, next) => {
-  return res.status(200).json({
-    message: 'Success'
-  })
-}
-
-
-
-// *************************************************** Admin *******************************************************************  //
-
-
-
-// *************************************************** Election Party *********************************************************** //
+const PartyModal = require('../modal/party');
 
 let partyImgName = '';
 
@@ -70,10 +40,6 @@ exports.postUpdateElectoralParty = async (req, res, next) => {
   const district = req.body.district
   const userType = req.body.userType
   const createdAt = new Date().getTime()
-  // const img = req.body.symbolImg;
-
-  // multer({ storage: fileStorageParty, fileFilter: fileFilterParty }).single('party-img');
-
   const imgPath = partyImgName.path;
 
   try {
@@ -106,11 +72,5 @@ exports.postUpdateElectoralParty = async (req, res, next) => {
   }
 
 }
-
-
-
-
-// *************************************************** Admin & Election Party *************************************************** //
-
 
 

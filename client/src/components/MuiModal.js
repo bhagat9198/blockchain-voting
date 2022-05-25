@@ -14,13 +14,13 @@ const modalStyle = {
 };
 
 export default function MuiModal(props) {
-  const { open, setOpen, title, cardActions, children} = props;
+  const { open, setOpen, title, cardActions, children } = props;
   let cardActionsCont = <></>;
 
-  if (cardActions && cardActions.length > 0 ) {
-    cardActionsCont =  cardActions.map(type => {
-      if(type === 'submit') {
-        return <Button size="small" sx={{ color: "green" }} onClick={() => {let a;}}>Submit</Button>
+  if (cardActions && cardActions.length > 0) {
+    cardActionsCont = cardActions.map(action => {
+      if (action.label === 'submit') {
+        return <Button size="small" sx={{ color: "green" }} onClick={action?.fun}>Submit</Button>
       } else {
         return <></>
       }
@@ -47,7 +47,7 @@ export default function MuiModal(props) {
             <Box>
               {cardActionsCont}
             </Box>
-            <Button size="small"  sx={{color: "red"}} onClick={() => setOpen(false)}>Close</Button>
+            <Button size="small" sx={{ color: "red" }} onClick={() => setOpen(false)}>Close</Button>
           </CardActions>
         </Card>
       </Box>

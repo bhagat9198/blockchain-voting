@@ -7,7 +7,7 @@ const AnnouncementSchema = new mongoose.Schema({
   body: {
     type: String
   },
-  autherId: {
+  userId: {
     type: String
   },
   userType: {

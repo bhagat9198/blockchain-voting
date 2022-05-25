@@ -71,11 +71,12 @@ export const signin = (data) => {
 
 export const resetPassword = (data) => {
   return async (dispatch, getState) => {
-    const password = data.password;
+    const newPwd = data.newPwd;
+    const oldPwd = data.oldPwd;
     const email = data.email;
 
     try {
-      const res = await axios.post(`${BASE_URL}/auth/reset-password`, { password, email });
+      const res = await axios.post(`${BASE_URL}/auth/reset-password`, { newPwd, oldPwd, email });
       console.log('resetPassword :: res :: ', res);
       if (res.status === 200) {
 

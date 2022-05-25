@@ -40,6 +40,7 @@ export const verify = (data) => {
 
 export const addAdmin = (data) => {
   return async (dispatch, getState) => {
+    console.log('addAdmin :: data :: ', data);
     const name = data.name;
     const email = data.email;
     const password = data.password;

@@ -4,7 +4,7 @@ const DonationSchema = new mongoose.Schema({
   cause: {
     type: String
   },
-  autherId: {
+  userId: {
     type: String
   },
   userType: {
