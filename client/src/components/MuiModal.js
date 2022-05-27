@@ -14,7 +14,7 @@ const modalStyle = {
 };
 
 export default function MuiModal(props) {
-  const { open, setOpen, title, cardActions, children } = props;
+  const { open, setOpen, title, cardActions, children, style } = props;
   let cardActionsCont = <></>;
 
   if (cardActions && cardActions.length > 0) {
@@ -33,6 +33,7 @@ export default function MuiModal(props) {
       onClose={() => setOpen(false)}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      style={style}
     >
       <Box sx={modalStyle}>
         <Card sx={{ m: 1 }}>

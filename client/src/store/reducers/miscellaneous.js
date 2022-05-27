@@ -1,9 +1,9 @@
-import { ALL_ADMINS } from "../actions/common";
+import { ALL_ADMINS, ALL_ANNOUNCEMENTS, ALL_BLOGS, ALL_DONATIONS } from "../actions/common";
 
 const initialState = {
   admins: [],
   blogs: [],
-  announcement: [],
+  announcements: [],
   donations: []
 }
 
@@ -14,6 +14,24 @@ const miscellaneousRed = (state = initialState, action) => {
         ...state,
         admins: action.admins
       }
+    case ALL_ANNOUNCEMENTS: {
+      return {
+        ...state,
+        announcements: action.announcements
+      }
+    }
+    case ALL_BLOGS: {
+      return {
+        ...state,
+        blogs: action.blogs
+      }
+    }
+    case ALL_DONATIONS: {
+      return {
+        ...state,
+        donations: action.donations
+      }
+    }
     default:
       return state;
   }

@@ -1,12 +1,15 @@
 import { Box, Button, Container, Grid, TextareaAutosize, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoMdAdd } from 'react-icons/io';
 import ContainerLabel from '../../components/ContainerLabel';
 import CardStats2 from '../../components/CardStats2';
 import MuiModal from '../../components/MuiModal';
 import postImg from './../../assets/images/post.jpeg';
 import BodyLayout from '../../components/BodyLayout';
-
+import { addBlog as addBlogFun } from './../../store/actions/privliged';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { allBlogs as allBlogsFun } from './../../store/actions/common'
 export default function Blog(props) {
   const { userType } = props;
   const [addBlog, setAddBlog] = useState(false);
@@ -17,23 +20,38 @@ export default function Blog(props) {
   const [p2, setP2] = useState('');
   const [p3, setP3] = useState('');
   const [img, setImg] = useState('');
+  const miscellaneousRed = useSelector(state => state.miscellaneousRed);
+  const allBlogs = miscellaneousRed.blogs;
+  const dispatch = useDispatch();
 
-  const addBlogHandler = e => {
-    const formData = new FormData();
-    formData.append('heading', heading);
-    formData.append('p1', p1);
-    formData.append('p2', p2);
-    formData.append('p3', p3);
-    formData.append('img', img);
-    console.log('Blog :: addBlogHandler :: formData :: ', formData);
+  useEffect(() => {
+    async function asyncFun() {
+      const res = await dispatch(allBlogsFun());
+      if (!res.status) {
+        toast.error(res.message);
+        return;
+      }
+    }
+    asyncFun()
+  }, [])
+
+  const addBlogHandler = async (e) => {
+    const data = {
+      heading, p1, p2, p3, img
+    };
+    console.log('addBlogHandler :: data :: ', data);
+    const res = await dispatch(addBlogFun(data));
+    if (!res.status) {
+      toast.error(res.message);
+      return;
+    }
+
+    toast.success('Blog added successfully');
   }
 
   const blogFileHandler = e => {
     if (!e.target.files || e.target.files.length === 0) return;
-
-    // console.log('Blog :: blogFileHandler :: files :: ', e.targets.files);
-    // const file = e.targets.files[0];
-    setImg(e.targets.files[0]);
+    setImg(e.target.files[0]);
   }
 
   return (
@@ -53,27 +71,18 @@ export default function Blog(props) {
                 subject={'skjdnfj sodjfohs iosdhfoh '}
               />
             </Grid>
-            <Grid item xs={12} sm={3} >
-              <CardStats2
-                cardActions={[{ label: 'read_more', fun: setReadBlog }, { label: 'delete', fun: setDeleteBlog }]}
-                heading={'haeding lol'}
-                subject={'skjdnfj sodjfohs iosdhfoh '}
-              />
-            </Grid>
-            <Grid item xs={12} sm={3} >
-              <CardStats2
-                cardActions={[{ label: 'read_more', fun: setReadBlog }, { label: 'delete', fun: setDeleteBlog }]}
-                heading={'haeding lol'}
-                subject={'skjdnfj sodjfohs iosdhfoh '}
-              />
-            </Grid>
+
           </Grid>
         </Box>
       </Container>
       <Container id="aaa">
         <MuiModal open={addBlog} setOpen={setAddBlog} title={'Add Blog'} cardActions={[{ label: 'submit', fun: addBlogHandler }]}  >
           <Box sx={{ my: 3 }} >
-            <TextField fullWidth id="outlined-basic" label="Heading" variant="outlined" />
+            <TextField
+              fullWidth
+              id="outlined-basic" label="Heading" variant="outlined"
+              onChange={e => setHeading(e.target.value)}
+            />
           </Box>
           <Box>
             <TextareaAutosize
@@ -81,6 +90,7 @@ export default function Blog(props) {
               placeholder="Paragraph 1"
               minRows={3}
               style={{ width: "88%", marginBottom: '20px', padding: "20px" }}
+              onChange={e => setP1(e.target.value)}
             />
           </Box>
           <Box>
@@ -88,6 +98,7 @@ export default function Blog(props) {
               aria-label="empty textarea"
               placeholder="Paragraph 2"
               minRows={3}
+              onChange={e => setP2(e.target.value)}
               style={{ width: "88%", marginBottom: '20px', padding: "20px" }}
             />
           </Box>
@@ -96,28 +107,33 @@ export default function Blog(props) {
               aria-label="empty textarea"
               placeholder="Paragraph 3 (Optional)"
               minRows={3}
+              onChange={e => setP3(e.target.value)}
               style={{ width: "88%", marginBottom: '20px', padding: "20px" }}
             />
           </Box>
           <Box>
-            <TextField type="file" />
+            <TextField type="file" onChange={blogFileHandler} />
           </Box>
         </MuiModal>
       </Container>
 
-      <MuiModal open={readBlog} setOpen={setReadBlog} title={'Blog Title'} >
-        <Box sx={{ maxHeight: "200px", maxWidth: "320px", p: 1 }} className="flex justifyCenter alignCenter" >
-          <img alt='blog img' src={postImg} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      <MuiModal open={readBlog} setOpen={setReadBlog} title={'Blog Title'} style={{ width: '80%' }} >
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Box sx={{ height: "200px", width: "520px", p: 1 }} className="flex justifyCenter alignCenter" >
+            <img alt='blog img' src={postImg} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </Box>
+          <Box>
+            <Typography variant='body1' sx={{ py: 1 }} >
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+            </Typography>
+            <Typography variant='body1' sx={{ py: 1 }} >
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+            </Typography>
+            <Typography variant='body1' sx={{ py: 1 }} >
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+            </Typography>
+          </Box>
         </Box>
-        <Typography variant='body1' sx={{ py: 1 }} >
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-        </Typography>
-        <Typography variant='body1' sx={{ py: 1 }} >
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-        </Typography>
-        <Typography variant='body1' sx={{ py: 1 }} >
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-        </Typography>
       </MuiModal>
     </BodyLayout>
   )
