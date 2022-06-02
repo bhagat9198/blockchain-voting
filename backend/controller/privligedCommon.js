@@ -48,8 +48,8 @@ exports.blogImg = multer({
 }).single('photo');
 
 exports.postAddBlog = async (req, res, next) => {
-  console.log('postAddBlog :: req.body :: ', req?.body);
-  console.log('postAddBlog :: req.file :: ', req?.file);
+  // console.log('postAddBlog :: req.body :: ', req?.body);
+  // console.log('postAddBlog :: req.file :: ', req?.file);
   const heading = req.body.heading;
   const p1 = req.body.p1;
   const p2 = req.body.p2;
@@ -62,7 +62,8 @@ exports.postAddBlog = async (req, res, next) => {
 
   try {
     const newBlog = await new BlogModal({
-      heading, p1, p2, p3, userId, userType, createdAt, imgPath: filePath, imgName: fileName
+      heading, p1, p2, p3, userId, userType, createdAt, 
+      imgPath: filePath, imgName: fileName
     })
 
     const savedBlog = await newBlog.save();
