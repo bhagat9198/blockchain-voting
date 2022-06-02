@@ -59,7 +59,7 @@ function Row(props) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Container sx={{py: 2, px: 1}}>
+            <Container sx={{ py: 2, px: 1 }}>
               <Typography variant='h6'>{row?.otherData?.heading}</Typography>
               <Typography >
                 {row?.otherData?.moto}
@@ -114,8 +114,8 @@ export default function MuiTableCollapsible(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.id} row={row} />
+          {rows.map((row, i) => (
+            <Row key={`${row.id}_${i}`} row={row} />
           ))}
         </TableBody>
       </Table>

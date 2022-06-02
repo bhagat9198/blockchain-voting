@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const DonationSchema = new mongoose.Schema({
+  heading: {
+    type: String
+  },
   cause: {
     type: String
   },

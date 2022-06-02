@@ -1,16 +1,22 @@
 import { Box, Button, Card, Container, Grid, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import ContainerLabel from './ContainerLabel'
 import userImg from './../assets/images/user.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from './../store/actions/auth';
 import { toast } from 'react-toastify';
+import { BASE_URL, imgObjectUrl } from '../util';
+
 export default function BasicProfileInfo() {
   const [oldPwd, setOldPwd] = useState('');
   const [newPwd, setNewPwd] = useState('');
   const [newCPwd, setNewCPwd] = useState('');
+  const [imgPreview, setImgPreview] = useState(false);
   const userRed = useSelector(state => state.userRed);
+  const userData = userRed.userData;
+
   const dispatch = useDispatch();
+  const inputFileRef = useRef(null);
 
   const pwdResetHandler = async (e) => {
     if (oldPwd !== newCPwd) {
@@ -31,13 +37,39 @@ export default function BasicProfileInfo() {
     toast.success('Password updated')
   }
 
+  const fileImgChangeHandler = e => {
+    if (!e.target.files || e.target.files.length === 0) return;
+
+    const res = imgObjectUrl({ fileImg: e.target.files[0] });
+    if (res.status) {
+      setImgPreview(res.imgObj)
+    } else {
+      toast.error('Error. Try again')
+      setImgPreview(false);
+    }
+  }
+
+  const uploadImgHandler = e => {
+    inputFileRef.current.click();
+  }
+
+  let uImg;
+  if(imgPreview) {
+    uImg = imgPreview;
+  } else if(userData?.imgPath && userData?.imgName) {
+    uImg = `${BASE_URL}/${userData?.imgPath}/${userData?.imgName}`
+  } else {
+    uImg = userImg
+  }
+
   return (
     <>
       <Grid container spacing={2} >
         <Grid item xs={12} sm={4} className="flex justifyCenter " >
           <Box sx={{ width: '60%', height: '400px', mt: 5 }}>
-            <img alt="user img" src={userImg} className="img" />
-            <Button variant="contained" fullWidth>Update Image</Button>
+            <img alt="user img" src={uImg} className="img" />
+            <Button onClick={uploadImgHandler} variant="contained" fullWidth>Update Image</Button>
+            <input type='file' hidden ref={inputFileRef} onChange={fileImgChangeHandler} />
           </Box>
         </Grid>
         <Grid item xs={12} sm={8}>
@@ -62,17 +94,17 @@ export default function BasicProfileInfo() {
             <Card>
               <form>
                 <Box sx={{ m: 1 }}>
-                  <TextField fullWidth label="Current Password" variant="filled"
+                  <TextField type='password' fullWidth label="Current Password" variant="filled" key='user-opwd'
                     onChange={e => setOldPwd(e.target.value)}
                   />
                 </Box>
                 <Box sx={{ m: 1 }}>
-                  <TextField fullWidth label="New Password" variant="filled"
+                  <TextField type='password' fullWidth label="New Password" variant="filled" key='user-pwd'
                     onChange={e => setNewPwd(e.target.value)}
                   />
                 </Box>
                 <Box sx={{ m: 1 }}>
-                  <TextField fullWidth label="Confirm New Password" variant="filled"
+                  <TextField type='password' fullWidth label="Confirm New Password" variant="filled" key='user-cpwd'
                     onChange={e => setNewCPwd(e.target.value)}
                   />
                 </Box>

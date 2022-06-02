@@ -31,6 +31,12 @@ const UserSchema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
   },
+  imgPath: {
+    type: String
+  },
+  imgName: {
+    type: String
+  }
 });
 
 // 1

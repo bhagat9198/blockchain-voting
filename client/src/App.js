@@ -45,14 +45,26 @@ export default function App() {
   const path = location.pathname;
   const userType = (path.split('/')[1]).toLowerCase();
   // console.log('App :: userType :: ', userType);
+  // console.log('App :: location :: ', location);
+  
+  const queryParams = (location.search.split('?')[1]).split('&');
+  let userNumber;
+  for(let i = 0; i < queryParams.length; i++) {
+    const query = queryParams[i].split('=');
+    if(query[0] === 'user') {
+      userNumber = query[1];
+      userNumber = Number(userNumber);
+    }
+  }
 
   useEffect(() => {
+    if(userNumber === undefined || userNumber === null  || userNumber === NaN) return;
     // console.log(getWeb3);
     if (!getWeb3 || !getWeb3.eth) return;
 
     async function asyncFun() {
       // get account
-      await getAccount()
+      await getAccount({accountNum: userNumber})
 
       // initlise contracts
       await initEthReceiverContract();
@@ -65,7 +77,7 @@ export default function App() {
     }
     asyncFun();
 
-  }, [getWeb3])
+  }, [getWeb3, userNumber])
 
   return (
     <>

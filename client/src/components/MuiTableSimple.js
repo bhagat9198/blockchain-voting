@@ -10,21 +10,21 @@ export default function MuiTableSimple(props) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            {columns.map(c => <TableCell align="right">{c}</TableCell>)}
+            {columns.map((c, i) => <TableCell key={`${c}_${i}`} align="right">{c}</TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rowsData.map((row) => (
+          {rowsData.map((row, i) => (
             <TableRow
-              key={row.name}
+              key={`${row.name}_${i}`}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.data1}
               </TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">{row.createdBy}</TableCell>
-              <TableCell align="right">{row.createdOn}</TableCell>
+              <TableCell align="right">{row.data2}</TableCell>
+              <TableCell align="right">{row.data3}</TableCell>
+              <TableCell align="right">{row.data4}</TableCell>
               {row?.action?.delete && <TableCell align="right"><Button><AiOutlineDelete /></Button></TableCell>}
             </TableRow>
           ))}

@@ -13,6 +13,9 @@ const PartySchema = new mongoose.Schema({
   imgPath: {
     type: String
   },
+  imgName: {
+    type: String
+  },
   moto: {
     type: String
   },

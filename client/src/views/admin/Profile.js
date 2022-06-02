@@ -10,6 +10,7 @@ import { addAdmin, getAllAdmins } from '../../store/actions/privliged';
 import MuiTableSimple from '../../components/MuiTableSimple';
 import { getDate } from '../../util';
 import ContainerLabel from '../../components/ContainerLabel';
+import { format } from 'date-fns';
 
 export default function Profile(props) {
   const { userType } = props;
@@ -26,8 +27,13 @@ export default function Profile(props) {
   const updatedAllAdmins = allAdmins.map(admin => {
     console.log('Profile :: updatedAllAdmins :: admin :: ', admin);
     // let createdOnDate = getDate(admin.createdAt);
-    let createdOnDate = '22';
-    return { name: admin.name, email: admin.email, createdBy: admin.createdBy, createdOn: createdOnDate, action: { delete: true } }
+    const d = new Date(Number(admin.createdAt));
+    const date = format(d, 'dd-MMM-yyyy');
+
+    return { 
+      data1: admin.name, data2: admin.email, 
+      data3: admin.createdBy, data4: date, 
+      action: { delete: true } }
   })
 
   console.log('updatedAllAdmins :: ', updatedAllAdmins);
@@ -85,28 +91,28 @@ export default function Profile(props) {
               <form>
                 <Box sx={{ m: 1 }}>
                   <TextField
-                    fullWidth label="Name" variant="outlined"
+                    fullWidth label="Name" variant="outlined" key='admin-name'
                     onChange={e => setAddAdminName(e.target.value)} />
                 </Box>
                 <Box sx={{ m: 1 }}>
-                  <TextField fullWidth label="Email" variant="outlined"
+                  <TextField type='email' fullWidth label="Email" variant="outlined" key='admin-email'
                     onChange={e => setAddAdminEmail(e.target.value)}
                   />
                 </Box>
                 <Box sx={{ m: 1 }}>
-                  <TextField fullWidth label="Password" variant="outlined"
+                  <TextField type='password' fullWidth label="Password" variant="outlined" key='admin-pwd'
                     onChange={e => setAddAdminPassword(e.target.value)}
                   />
                 </Box>
                 <Box sx={{ m: 1 }}>
-                  <TextField fullWidth label="Password" variant="outlined"
+                  <TextField type='password' fullWidth label="Confirm Password" variant="outlined" key='admin-cpwd'
                     onChange={e => setAddAdminCPassword(e.target.value)}
                   />
                 </Box>
                 <Box sx={{ m: 1 }}>
                   <Button variant="contained" fullWidth
                     onClick={addAdminHandler}
-                  >Update Password</Button>
+                  >Add New Admin</Button>
                 </Box>
               </form>
             </Container>

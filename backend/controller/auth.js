@@ -53,7 +53,7 @@ exports.postSignup = async (req, res, next) => {
       voteCardId,
       password: hashedPwd,
       createdAt,
-      isVerified
+      isVerified,
     });
 
     const userSaved = await newUser.save();

@@ -16,7 +16,7 @@ export default function MuiAccordion(props) {
 
   return (
     list && list.map((l, i) =>
-      <Accordion expanded={expanded === `panel${i}`} onChange={handleChange(`panel${i}`)}>
+      <Accordion key={l.subheading} expanded={expanded === `panel${i}`} onChange={handleChange(`panel${i}`)}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls={`panel${1}bh-content`}

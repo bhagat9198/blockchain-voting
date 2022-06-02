@@ -22,15 +22,15 @@ export const addElectionParty = async ({ id }) => {
   return addPartyRes;
 }
 
-export const getAccount = async () => {
+export const getAccount = async ({accountNum}) => {
   const accounts = await new getWeb3.eth.getAccounts();
   // console.log('extractAccounts :: accounts :: ', accounts);
-  account = accounts[counter];
-  if (accounts.length === counter) {
-    counter = 0;
-  } else {
-    counter = counter + 1;
-  }
+  account = accounts[accountNum];
+  // if (accounts.length === counter) {
+  //   counter = 0;
+  // } else {
+  //   counter = counter + 1;
+  // }
 }
 
 export const initVotingContract = () => {

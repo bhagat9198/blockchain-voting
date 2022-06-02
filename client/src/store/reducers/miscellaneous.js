@@ -1,10 +1,12 @@
 import { ALL_ADMINS, ALL_ANNOUNCEMENTS, ALL_BLOGS, ALL_DONATIONS } from "../actions/common";
+import { SETTINGS, UPDATE_SETTING_RESULT, UPDATE_SETTING_VOTE } from "../actions/privliged";
 
 const initialState = {
   admins: [],
   blogs: [],
   announcements: [],
-  donations: []
+  donations: [],
+  settings: {},
 }
 
 const miscellaneousRed = (state = initialState, action) => {
@@ -30,6 +32,30 @@ const miscellaneousRed = (state = initialState, action) => {
       return {
         ...state,
         donations: action.donations
+      }
+    }
+    case SETTINGS: {
+      return {
+        ...state,
+        settings: action.settings
+      }
+    }
+    case UPDATE_SETTING_VOTE: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          votingPhase: action.status
+        }
+      }
+    }
+    case UPDATE_SETTING_RESULT: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          results: action.status
+        }
       }
     }
     default:

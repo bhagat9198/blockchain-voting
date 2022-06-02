@@ -10,10 +10,11 @@ import { addBlog as addBlogFun } from './../../store/actions/privliged';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { allBlogs as allBlogsFun } from './../../store/actions/common'
+import { BASE_URL } from '../../util';
 export default function Blog(props) {
   const { userType } = props;
   const [addBlog, setAddBlog] = useState(false);
-  const [readBlog, setReadBlog] = useState(false);
+  const [readBlog, setReadBlog] = useState({ status: false, data: { heading: '', p1: '', p2: '', p3: '' } });
   const [deleteBlog, setDeleteBlog] = useState(false);
   const [heading, setHeading] = useState('');
   const [p1, setP1] = useState('');
@@ -63,15 +64,16 @@ export default function Blog(props) {
         </Box>
         <Box>
           <ContainerLabel label="All Blogs" />
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={3} >
+          <Grid container spacing={2}>
+            {allBlogs.map(b => <Grid item xs={12} sm={4} >
               <CardStats2
                 cardActions={[{ label: 'read_more', fun: setReadBlog }, { label: 'delete', fun: setDeleteBlog }]}
-                heading={'haeding lol'}
-                subject={'skjdnfj sodjfohs iosdhfoh '}
+                heading={b.heading}
+                subject={b.p1}
+                allData={b}
+                img={`${BASE_URL}/${b.imgPath}/${b.imgName}`}
               />
-            </Grid>
-
+            </Grid>)}
           </Grid>
         </Box>
       </Container>
@@ -89,7 +91,7 @@ export default function Blog(props) {
               aria-label="empty textarea"
               placeholder="Paragraph 1"
               minRows={3}
-              style={{ width: "88%", marginBottom: '20px', padding: "20px" }}
+              style={{ width: "100%", marginBottom: '20px', padding: "20px" }}
               onChange={e => setP1(e.target.value)}
             />
           </Box>
@@ -99,7 +101,7 @@ export default function Blog(props) {
               placeholder="Paragraph 2"
               minRows={3}
               onChange={e => setP2(e.target.value)}
-              style={{ width: "88%", marginBottom: '20px', padding: "20px" }}
+              style={{ width: "100%", marginBottom: '20px', padding: "20px" }}
             />
           </Box>
           <Box>
@@ -108,7 +110,7 @@ export default function Blog(props) {
               placeholder="Paragraph 3 (Optional)"
               minRows={3}
               onChange={e => setP3(e.target.value)}
-              style={{ width: "88%", marginBottom: '20px', padding: "20px" }}
+              style={{ width: "100%", marginBottom: '20px', padding: "20px" }}
             />
           </Box>
           <Box>
@@ -117,20 +119,20 @@ export default function Blog(props) {
         </MuiModal>
       </Container>
 
-      <MuiModal open={readBlog} setOpen={setReadBlog} title={'Blog Title'} style={{ width: '80%' }} >
+      <MuiModal open={readBlog.status} setOpen={val => setReadBlog({ status: false, data: { heading: '', p1: '', p2: '', p3: '' } })} title={readBlog.data.heading} style={{ width: '80%' }} >
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Box sx={{ height: "200px", width: "520px", p: 1 }} className="flex justifyCenter alignCenter" >
-            <img alt='blog img' src={postImg} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img alt='blog img' src={`${BASE_URL}/${readBlog.data.imgPath}/${readBlog.data.imgName}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </Box>
           <Box>
             <Typography variant='body1' sx={{ py: 1 }} >
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+              {readBlog.data.p1}
             </Typography>
             <Typography variant='body1' sx={{ py: 1 }} >
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+              {readBlog.data.p2}
             </Typography>
             <Typography variant='body1' sx={{ py: 1 }} >
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+              {readBlog.data.p3}
             </Typography>
           </Box>
         </Box>

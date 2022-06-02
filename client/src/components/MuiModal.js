@@ -33,9 +33,9 @@ export default function MuiModal(props) {
       onClose={() => setOpen(false)}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-      style={style}
+      
     >
-      <Box sx={modalStyle}>
+      <Box sx={modalStyle} style={style}>
         <Card sx={{ m: 1 }}>
           <CardActionArea sx={{ p: 2 }}>
             <CardHeader

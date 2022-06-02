@@ -134,6 +134,9 @@ export const ALL_ADMINS = 'ALL_ADMINS';
 export const DELETE_ADMIN = 'DELETE_ADMIN';
 export const VOTE_STATUS = 'VOTE_STATUS';
 export const VOTE_RESULTS_STATUS = 'VOTE_RESULTS_STATUS';
+export const SETTINGS = 'SETTINGS';
+export const UPDATE_SETTING_VOTE = 'UPDATE_SETTING_VOTE';
+export const UPDATE_SETTING_RESULT = 'UPDATE_SETTING_RESULT';
 
 
 export const verify = (data) => {
@@ -215,54 +218,6 @@ export const deleteAdmin = (data) => {
   }
 }
 
-export const voteStatus = (data) => {
-  return async (dispatch, getState) => {
-    const status = data.status;
-
-    try {
-      const res = await axios.post(`${BASE_URL}/admin/vote-status`, { status });
-      console.log('voteStatus :: res :: ', res);
-      if (res.status === 201) {
-
-      } else {
-        return {
-          status: false,
-          message: res.message
-        }
-      }
-    } catch (error) {
-      return {
-        status: false,
-        message: error.message
-      }
-    }
-  }
-}
-
-export const voteResultStatus = (data) => {
-  return async (dispatch, getState) => {
-    const status = data.status;
-
-    try {
-      const res = await axios.post(`${BASE_URL}/admin/vote-result-status`, { status });
-      console.log('voteResultStatus :: res :: ', res);
-      if (res.status === 201) {
-
-      } else {
-        return {
-          status: false,
-          message: res.message
-        }
-      }
-    } catch (error) {
-      return {
-        status: false,
-        message: error.message
-      }
-    }
-  }
-}
-
 export const getAllAdmins = (data) => {
   return async (dispatch, getState) => {
 
@@ -292,6 +247,98 @@ export const getAllAdmins = (data) => {
     }
   }
 }
+
+export const voteStatus = (data) => {
+  return async (dispatch, getState) => {
+    const status = data.status;
+    console.log('voteStatus :: status :: ', status);
+    try {
+      const res = await axios.get(`${BASE_URL}/admin/vote-status?status=${status}`);
+      console.log('voteStatus :: res :: ', res);
+      if (res.status === 201) {
+        dispatch({
+          type: UPDATE_SETTING_VOTE,
+          status
+        })
+        return {
+          status: true,
+          message: res.data.message
+        }
+      } else {
+        return {
+          status: false,
+          message: res.message
+        }
+      }
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message
+      }
+    }
+  }
+}
+
+export const voteResultStatus = (data) => {
+  return async (dispatch, getState) => {
+    const status = data.status;
+
+    try {
+      const res = await axios.get(`${BASE_URL}/admin/election-result-status?status=${status}`);
+      console.log('voteResultStatus :: res :: ', res);
+      if (res.status === 201) {
+        dispatch({
+          type: UPDATE_SETTING_RESULT,
+          status
+        })
+        return {
+          status: true,
+          message: res.data.message
+        }
+      } else {
+        return {
+          status: false,
+          message: res.message
+        }
+      }
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message
+      }
+    }
+  }
+}
+
+export const adminSettings = () => {
+  return async (dispatch, getState) => {
+
+    try {
+      const res = await axios.get(`${BASE_URL}/admin/settings`);
+      // console.log('adminSettings :: res :: ', res);
+      if (res.status === 200) {
+        await dispatch({
+          type: SETTINGS,
+          settings: res.data.data.settings[0]
+        })
+        return {
+          status: true,
+        }
+      } else {
+        return {
+          status: false,
+          message: res.message
+        }
+      }
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message
+      }
+    }
+  }
+}
+
 
 // *************************************************** Election Party *********************************************************** //
 

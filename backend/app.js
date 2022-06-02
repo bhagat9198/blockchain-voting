@@ -1,4 +1,5 @@
 require('dotenv').config()
+const path = require('path');
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
@@ -7,20 +8,20 @@ const log = require('simple-node-logger').createSimpleLogger('project.log');
 const cookieParser = require("cookie-parser");
 
 const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/admin');
-const voterRoutes = require('./routes/voter');
-const electionPartyRoutes = require('./routes/electionParty');
+const commonRoutes = require('./routes/common');
+const privligedCommonRoutes = require('./routes/privligedCommon');
 const errorController = require('./controller/error');
 
 const app = express()
 app.use(express.json())
 app.use(cors())
 app.use(cookieParser());
+app.use(express.static('files')); 
+// app.use('/images', express.static('images'));
 
 app.use('/auth', authRoutes);
-app.use("/admin", adminRoutes);
-app.use("/voter", voterRoutes);
-app.use("/election-party", electionPartyRoutes);
+app.use(commonRoutes);
+app.use(privligedCommonRoutes);
 // app.use('/', authRoutes);
 
 const MONGODB_URI = process.env.MONGODB_URI;
