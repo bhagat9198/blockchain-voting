@@ -3,10 +3,12 @@ import React from 'react'
 import { RiNumber0, RiNumber1, RiNumber2, RiNumber3, RiNumber4, RiNumber5, RiNumber6, RiNumber7, RiNumber8, RiNumber9 } from 'react-icons/ri';
 import { colorCombinations } from '../util';
 
-let arrayIndex = Math.floor(Math.random() * colorCombinations.length)
+let arrayIndex = Math.floor(Math.random() * colorCombinations.length - 1)
 
 export default function CardStats1(props) {
   const { iconName, heading1, heading2, date } = props;
+  console.log('CardStats1 :: colorCombinations :: ', colorCombinations);
+  console.log('CardStats1 :: arrayIndex :: ', arrayIndex);
   if (arrayIndex === colorCombinations.length) {
     arrayIndex = 0;
   } else {
@@ -15,8 +17,13 @@ export default function CardStats1(props) {
 
   let Icon = <></>;
   let color = 'black';
-  let c1 = colorCombinations[arrayIndex].c1;
-  let c2 = colorCombinations[arrayIndex].c2;
+  // console.log('colorCombinations[arrayIndex].c1', arrayIndex, colorCombinations[arrayIndex], colorCombinations[arrayIndex]['c1']);
+  let c1, c2;
+  if (colorCombinations[arrayIndex]) {
+    c1 = colorCombinations[arrayIndex]['c1'];
+    c2 = colorCombinations[arrayIndex]['c2'];
+  }
+  
   if (iconName === 'RiNumber1') {
     Icon = <RiNumber1 style={{ fontSize: '250%' }} />
     color = 'red';

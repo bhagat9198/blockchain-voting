@@ -18,11 +18,9 @@ export default function Announcement(props) {
   const allAnnouncements = miscellaneousRed.announcements;
 
   let updatedAnnouncements = allAnnouncements.map(annocemnet => {
-    console.log('annocemnet.createdAt :: ', annocemnet.createdAt);
+    // console.log('annocemnet.createdAt :: ', annocemnet.createdAt);
     const d = new Date(Number(annocemnet.createdAt));
-    console.log('d :: ', d);
     const date = format(d, 'dd-MMM-yyyy');
-    console.log('date :: ', date);
     return {
       _id: annocemnet._id,
       heading: annocemnet.heading,

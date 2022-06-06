@@ -54,10 +54,9 @@ exports.postAddBlog = async (req, res, next) => {
   const p1 = req.body.p1;
   const p2 = req.body.p2;
   const p3 = req.body.p3;
-  // const userId = req.body.heading;
-  // const userType = req.body.userType;
-  const userId = '10324';
-  const userType = 'admion';
+  const userId = req.body._id;
+  const userType = req.body.userType;
+
   const createdAt = new Date().getTime();
 
   try {
@@ -91,8 +90,7 @@ exports.postAddAnnouncement = async (req, res, next) => {
   const body = req.body.body;
   const createdAt = new Date().getTime();
   const userType = req.body.userType;
-  // const userId = req.body.body;
-  const userId = '123';
+  const userId = req.body._id;
 
   try {
     const newAnnouncement = await new AnnouncementModal({
@@ -122,8 +120,7 @@ exports.postAddDonation = async (req, res, next) => {
   const cause = req.body.cause;
   const userType = req.body.userType;
   const createdAt = new Date().getTime();
-  // const userId = req.body.body;
-  const userId = '123';
+  const userId = req.body._id;
 
   try {
     const newDonation = await new DonationModal({
@@ -131,8 +128,7 @@ exports.postAddDonation = async (req, res, next) => {
     })
 
     const savedDonation = await newDonation.save();
-    console.log('postAddDonation :: savedDonation :: ', savedDonation);
-
+    // console.log('postAddDonation :: savedDonation :: ', savedDonation);
 
     return res.status(201).json({
       message: 'Success',
@@ -184,6 +180,8 @@ exports.postAddAdmin = async (req, res, next) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
+  const createdById = req.body._id;
+  const createdByName = req.body.createdByName;
   const createdAt = new Date().getTime();
 
   let hashedPwd = await new Promise((resolve, reject) => {
@@ -211,12 +209,13 @@ exports.postAddAdmin = async (req, res, next) => {
     announcements: [],
     donations: [],
     createdAt,
-    createdBy: 'admin'
+    createdByName,
+    createdById
   });
 
   try {
     const savedAdmin = await newAdmin.save();
-    console.log('postAddAdmins :: savedAdmin :: ', savedAdmin);
+    // console.log('postAddAdmins :: savedAdmin :: ', savedAdmin);
     return res.status(201).json({
       message: 'Success',
       status: true,
@@ -274,7 +273,7 @@ exports.getAllAdmins = (req, res, next) => {
 
 exports.getVoteStatus = async (req, res, next) => {
   const status = req.query.status;
-  console.log('getVoteStatus :: status :: ', status);
+  // console.log('getVoteStatus :: status :: ', status);
   try {
     const setting = await settingsModal.findById('62978e33de7489d369a1cd3b')
     // console.log('getVoteStatus :: setting :: ', setting);
@@ -297,7 +296,7 @@ exports.getVoteStatus = async (req, res, next) => {
 
 exports.getElectionResultStatus = async (req, res, next) => {
   const status = req.query.status;
-  console.log('getVoteStatus :: status :: ', status);
+  // console.log('getVoteStatus :: status :: ', status);
   try {
     const setting = await settingsModal.findById('62978e33de7489d369a1cd3b')
     setting.results = status;
@@ -315,30 +314,6 @@ exports.getElectionResultStatus = async (req, res, next) => {
   }
 }
 
-exports.getSettings = (req, res, next) => {
-  settingsModal.find().then(settings => {
-    if (!settings) {
-      return res.status(200).json({
-        message: 'No settings found',
-        status: false
-      })
-    }
-    return res.status(200).json({
-      message: 'Success',
-      status: true,
-      data: {
-        settings
-      }
-    })
-  }).catch(error => {
-    return res.status(400).json({
-      message: `Error: ${error.message}`,
-      status: false
-    })
-  })
-
-}
-
 
 // *************************************************** Election Party *********************************************************** //
 
@@ -348,7 +323,7 @@ exports.partyImg = multer({
 }).single('photo');
 
 exports.postUpdateElectoralParty = async (req, res, next) => {
-  // console.log('postUpdateElectoralParty :: body :: ', req.body);
+  console.log('postUpdateElectoralParty :: body :: ', req.body);
   // console.log('postUpdateElectoralParty :: body :: ', req.file);
   const partyName = req.body.partyName
   const candidateName = req.body.candidateName
@@ -358,8 +333,9 @@ exports.postUpdateElectoralParty = async (req, res, next) => {
   const state = req.body.state
   const district = req.body.district
   const userType = req.body.userType
+  const account = req.body.account
+  const userId = req.body._id
   const createdAt = new Date().getTime()
-
 
   try {
     const newParty = await new PartyModal({
@@ -373,7 +349,9 @@ exports.postUpdateElectoralParty = async (req, res, next) => {
       userType,
       createdAt,
       imgPath: filePath,
-      imgName: fileName
+      imgName: fileName,
+      account,
+      userId,
     })
     const savedParty = await newParty.save();
 

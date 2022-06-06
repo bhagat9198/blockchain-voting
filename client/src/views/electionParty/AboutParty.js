@@ -13,6 +13,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateElectionParty } from '../../store/actions/privliged';
 
 export default function AboutParty(props) {
+  const { userType } = props;
+
   const inputFileRef = useRef(null);
   const [imgPreview, setImgPreview] = useState(false);
   const [name, setName] = useState('');
@@ -32,6 +34,7 @@ export default function AboutParty(props) {
     inputFileRef.current.click();
   }
 
+  let imgData;
   const fileImgChangeHandler = e => {
     if (!e.target.files || e.target.files.length === 0) return;
 
@@ -39,6 +42,7 @@ export default function AboutParty(props) {
     const res = imgObjectUrl({ fileImg: e.target.files[0] });
     if (res.status) {
       setImgPreview(res.imgObj)
+      imgData = e.target.files[0]
     } else {
       toast.error('Error. Try again')
       setImgPreview(false);
@@ -51,18 +55,12 @@ export default function AboutParty(props) {
     //   return;
     // }
 
-    const formData = new FormData();
-    formData.append('photo', symbolImg);
-    formData.append('partyName', name);
-    formData.append('candidateName', candidateName);
-    formData.append('symbolName', symbolName);
-    formData.append('moto', moto);
-    formData.append('vision', vision);
-    formData.append('state', state);
-    formData.append('district', district);
-    formData.append('userType', userRed.userData.userType);
 
-    const res = await dispatch(updateElectionParty(formData));
+
+    const res = await dispatch(updateElectionParty({
+      photo: symbolImg, name,
+      candidateName, symbolName, moto, vision, state, district,
+    }));
     if (!res.status) {
       toast.error(res.message);
       return;
@@ -79,7 +77,7 @@ export default function AboutParty(props) {
   }
 
   return (
-    <BodyLayout>
+    <BodyLayout userType={userType}>
       <Container>
         <ContainerLabel label="Your Electrol Party" />
         <Box sx={{ py: 2 }} />
@@ -134,17 +132,6 @@ export default function AboutParty(props) {
                 />
               </Box>
               <Box sx={{ py: 2 }}>
-                {/* <TextField
-                  sx={{ width: '100%' }}
-                  required
-                  id="outlined-required"
-                  label="State"
-                  placeholder="State"
-                  value={state}
-                  InputProps={{ startAdornment: <InputAdornment position="start"><MdOutlinePlace /></InputAdornment> }}
-                  onChange={e => setState(e.target.value)}
-                /> */}
-
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">State</InputLabel>
                   <Select
@@ -154,12 +141,10 @@ export default function AboutParty(props) {
                     label="State"
                     onChange={stateHandler}
                   >
-                    {configRed.states.map(state => <MenuItem value={state}>{state}</MenuItem>)}
+                    {configRed.states.map((state, i) => <MenuItem key={`menuItem_${i}`} value={state}>{state}</MenuItem>)}
                   </Select>
                 </FormControl>
               </Box>
-
-
               <Box sx={{ py: 2 }}>
                 <TextField
                   sx={{ width: '100%' }}
@@ -168,7 +153,6 @@ export default function AboutParty(props) {
                   label="District"
                   placeholder="District"
                   value={district}
-                  InputProps={{ startAdornment: <InputAdornment position="start"><MdOutlinePlace /></InputAdornment> }}
                   onChange={e => setDistrict(e.target.value)}
                 />
               </Box>
@@ -180,7 +164,6 @@ export default function AboutParty(props) {
                   style={{ width: "100%", padding: "20px" }}
                   value={moto}
                   onChange={e => setMoto(e.target.value)}
-                  InputProps={{ startAdornment: <InputAdornment position="start"><MdOutlinePlace /></InputAdornment> }}
                 />
               </Box>
               <Box sx={{ py: 2 }}>

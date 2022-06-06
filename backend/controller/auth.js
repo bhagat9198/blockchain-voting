@@ -3,6 +3,9 @@ const User = require("./../modal/user");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
+const AdminModal = require('./../modal/admin');
+const UserModal = require('./../modal/user');
+
 const bycryptSaltRounds = Number(process.env.BYCRYPT_SALT_ROUNDS);
 const bycryptSalt = process.env.BYCRYPT_SALT;
 const jwtSecret = process.env.JWT_SECRET;
@@ -54,11 +57,12 @@ exports.postSignup = async (req, res, next) => {
       password: hashedPwd,
       createdAt,
       isVerified,
+      hasVoted: false
     });
 
     const userSaved = await newUser.save();
-    console.log('postSignup :: newUser :: ', newUser);
-    console.log('postSignup :: userSaved :: ', userSaved);
+    // console.log('postSignup :: newUser :: ', newUser);
+    // console.log('postSignup :: userSaved :: ', userSaved);
     const token = await jwt.sign({
       userType: userType,
       email,
@@ -170,5 +174,203 @@ exports.authorization = (req, res, next) => {
   } catch {
     return res.sendStatus(403);
   }
+
+}
+
+
+exports.getAdminDetails = async(req, res, next) => {
+  const _id = req.params.id;
+
+  try {
+    const admin = await AdminModal.findById(_id);
+    console.log('auth :: getAdminDetails :: admin :: ', admin);
+    if(!admin) {
+      return res.json(400).json({
+        message: 'No user with specifid id',
+        status: false
+      })
+    }
+    return res.status(200).json({
+      status: true,
+      data: admin,
+      message: "Success",
+    })
+  } catch(error) {
+    console.log('auth :: getAdminDetails :: error :: ', error);
+    return res.json(400).json({
+      message: error,
+      status: false
+    })
+  }
+
+}
+
+exports.getUserDetails = async(req, res, next) => {
+  const _id = req.params.id;
+  try {
+    const user = await UserModal.findById(_id);
+    console.log('auth :: getUserDetails :: user :: ', user);
+    if(!user) {
+      return res.json(400).json({
+        message: 'No user with specifid id',
+        status: false
+      })
+    }
+    return res.status(200).json({
+      status: true,
+      data: user,
+      message: "Success",
+    })
+  } catch(error) {
+    console.log('auth :: getUserDetails :: error :: ', error);
+    return res.json(400).json({
+      message: error,
+      status: false
+    })
+  }
+}
+
+exports.patchUserDetails = async(req, res, next) => {
+  console.log('auth :: patchUserDetails :: req.body :: ', req.body);
+  console.log('auth :: patchUserDetails :: req.headers :: ', req.headers);
+  const _id = req.params.id;
+  const partyId = req.body.partyId;
+  const blogId = req.body.blogId;
+  const announcementId = req.body.announcementId;
+  const donationId = req.body.donationId;
+  const isVerified = req.body.isVerified;
+  const hasVoted = req.body.hasVoted;
+
+  try {
+    let user = await UserModal.findById(_id);
+    console.log('auth :: patchUserDetails :: user :: ', user);
+    if(!user) {
+      return res.json(400).json({
+        message: 'No user with specifid id',
+        status: false
+      })
+    }
+
+    if (partyId) {
+      user.partyId = `${partyId}`;
+    }
+    if (hasVoted) {
+      user.hasVoted = Boolean(hasVoted);
+    }
+    if (isVerified) {
+      user.isVerified = Boolean(isVerified);
+    }
+    if (partyId) {
+      user.partyId = `${partyId}`;
+    }
+    if (blogId) {
+      user.blogs.unshift(blogId);
+    }
+    if (announcementId) {
+      user.announcements.unshift(announcementId);
+    }
+    if (donationId) {
+      user.donations.unshift(donationId);
+    }
+
+    console.log('auth :: patchUserDetails :: user :: ', user);
+    let savedUserData = await user.save();
+    return res.status(200).json({
+      status: true,
+      data: savedUserData,
+      message: "Success",
+    })
+
+  } catch(error) {
+    console.log('auth :: patchUserDetails :: error :: ', error);
+    return res.json(400).json({
+      message: error,
+      status: false
+    })
+  }
+}
+
+exports.patchAdminDetails = async(req, res, next) => {
+  const _id = req.params.id;
+  const partyId = req.body.partyId;
+  const blogId = req.body.blogId;
+  const announcementId = req.body.announcementId;
+  const donationId = req.body.donationId;
+  const isVerified = req.body.isVerified;
+  const hasVoted = req.body.hasVoted;
+
+  try {
+    const user = await AdminModal.findById(_id);
+    console.log('auth :: patchAdminDetails :: user :: ', user);
+    if(!user) {
+      return res.json(400).json({
+        message: 'No admin with specifid id',
+        status: false
+      })
+    }
+    if (partyId) {
+      user.partyId = `${partyId}`;
+    }
+    if (hasVoted) {
+      user.hasVoted = Boolean(hasVoted);
+    }
+    if (isVerified) {
+      user.isVerified = Boolean(isVerified);
+    }
+    if (partyId) {
+      user.partyId = `${partyId}`;
+    }
+    if (blogId) {
+      user.blogs.unshift(blogId);
+    }
+    if (announcementId) {
+      user.announcements.unshift(announcementId);
+    }
+    if (donationId) {
+      user.donations.unshift(donationId);
+    }
+
+    console.log('auth :: patchUserDetails :: user :: ', user);
+    let savedUserData = await user.save();
+
+    return res.status(200).json({
+      status: true,
+      data: savedUserData,
+      message: "Success",
+    })
+
+  } catch(error) {
+    console.log('auth :: patchAdminDetails :: error :: ', error);
+    return res.json(400).json({
+      message: error,
+      status: false
+    })
+  }
+}
+
+exports.postGenerateToken = async(req, res, next) => {
+  console.log('auth :: postGenerateToken :: req.body :: ', req.body);
+  const userType = req.body.userType;
+  const email = req.body.email;
+  const _id = req.body._id;
+
+  const token = await jwt.sign({
+    _id,
+    userType,
+    email,
+  }, jwtSecret);
+  console.log('auth :: postGenerateToken :: token :: ', token);
+
+  res.setHeader(
+    "x-access-token", `${token}`
+  )
+
+  return res.status(201).json({
+    message: "Success",
+    status: true,
+    data: {
+      token
+    }
+  });
 
 }

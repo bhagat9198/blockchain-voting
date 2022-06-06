@@ -7,7 +7,7 @@ export default function Vote(props) {
 
   return (
     <BodyLayout userType={userType} >
-      <VoteCommon />
+      <VoteCommon userType={userType} />
     </BodyLayout>
   )
 }

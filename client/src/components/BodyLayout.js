@@ -16,16 +16,17 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Header from './Header';
-import { MdOutlineDashboard, MdOutlineSpeakerPhone } from 'react-icons/md';
+import { MdOutlineDashboard, MdOutlineSpeakerPhone, MdOutlineHowToVote } from 'react-icons/md';
 import { FaBloggerB, FaDonate } from 'react-icons/fa';
 import { GiPodiumWinner } from 'react-icons/gi';
 import { GrInfo } from 'react-icons/gr';
 import { GoVerified } from 'react-icons/go';
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { BsNewspaper } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import Footer from './Footer';
+import { useSelector } from 'react-redux';
 
 
 const drawerWidth = 240;
@@ -33,6 +34,10 @@ const drawerWidth = 240;
 function BodyLayout(props) {
   const { window, children, userType } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { search: queryParams } = useLocation()
+  // console.log('App :: location :: queryParams :: ', queryParams);
+  const miscellaneousRed = useSelector(state => state.miscellaneousRed);
+  const adminSettings = miscellaneousRed.settings;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -51,10 +56,10 @@ function BodyLayout(props) {
       { label: 'Settings', to: "/settings", icon: <CgProfile /> },
       { label: 'Profile', to: "/profile", icon: <CgProfile /> },
     ]
-
   } else if (userType === 'voter') {
     navs = [
       { label: 'Dashboard', to: "/", icon: <MdOutlineDashboard /> },
+      { label: 'Vote', to: "/vote", icon: <MdOutlineHowToVote /> },
       { label: 'Result', to: "/results", icon: <GiPodiumWinner /> },
       { label: 'Latest Updates', to: "/latest-updates", icon: <BsNewspaper /> },
       { label: 'Profile', to: "/profile", icon: <CgProfile /> },
@@ -62,21 +67,29 @@ function BodyLayout(props) {
   } else {
     navs = [
       { label: 'Dashboard', to: "/", icon: <MdOutlineDashboard /> },
-      { label: 'Announcement', to: "/announcements", icon: <MdOutlineSpeakerPhone /> },
+      // { label: 'Announcement', to: "/announcements", icon: <MdOutlineSpeakerPhone /> },
       { label: 'Blog', to: "/blogs", icon: <FaBloggerB /> },
       { label: 'Donate', to: "/donations", icon: <FaDonate /> },
       { label: 'Result', to: "/results", icon: <GiPodiumWinner /> },
       { label: 'Add Party', to: "/add-party", icon: <AiOutlineUsergroupAdd /> },
+      { label: 'Vote', to: "/vote", icon: <MdOutlineHowToVote /> },
       { label: 'Profile', to: "/profile", icon: <CgProfile /> },
     ]
+  }
+
+  let page;
+  if (userType === 'electionParty') {
+    page = 'election-party'
+  } else {
+    page = userType
   }
 
   const drawer = <Box>
     <Toolbar />
     <Divider />
     <List>
-      {navs.map((nav) => (
-        <Link to={`/${userType}${nav.to}`}>
+      {navs.map((nav, i) => (
+        <Link key={`nav_${i}`} to={`/${page}${nav.to}${queryParams}`}>
           <ListItem button key={nav.label}>
             <ListItemIcon>
               {nav.icon}

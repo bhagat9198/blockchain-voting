@@ -22,7 +22,10 @@ const AdminSchema = new mongoose.Schema({
   createdAt: {
     type: String,
   },
-  createdBy: {
+  createdByName: {
+    type: String,
+  },
+  createdById: {
     type: String,
   },
 

@@ -6,7 +6,8 @@ import { FaVoteYea } from 'react-icons/fa';
 import { GiTargetPrize } from 'react-icons/gi';
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
-import { adminSettings, voteResultStatus, voteStatus } from '../../store/actions/privliged';
+import { voteResultStatus, voteStatus } from '../../store/actions/privliged';
+import { adminSettings as adminSettingsFun } from '../../store/actions/common';
 
 
 export default function Settings(props) {
@@ -19,7 +20,7 @@ export default function Settings(props) {
 
   useEffect(() => {
     async function asyncFun() {
-      const res = await dispatch(adminSettings());
+      const res = await dispatch(adminSettingsFun());
       if (!res.status) {
         toast.error(res.message);
         return;

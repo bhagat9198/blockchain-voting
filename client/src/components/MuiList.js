@@ -13,7 +13,7 @@ export default function MuiList(props) {
       sx={{ width: '100%', bgcolor: 'background.paper' }}
       aria-label="contacts"
     >
-      {list && list.map((l, i) => <ListItem disablePadding>
+      {list && list.map((l, i) => <ListItem disablePadding key={`mui-list-${i}`}>
         <ListItemButton
           selected={selected?.index === i}
           onClick={(event) => handler({ event: event, index: i, label: l.label })}

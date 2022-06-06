@@ -1,12 +1,21 @@
-import { ALL_ADMINS, ALL_ANNOUNCEMENTS, ALL_BLOGS, ALL_DONATIONS } from "../actions/common";
-import { SETTINGS, UPDATE_SETTING_RESULT, UPDATE_SETTING_VOTE } from "../actions/privliged";
+import { ADMIN_SETTINGS, ALL_ADMINS, ALL_ANNOUNCEMENTS, ALL_BLOGS, ALL_DONATIONS, LATEST_ANNOUNCEMENTS, LATEST_BLOGS, LATEST_DONATIONS } from "../actions/common";
+import { ADD_ELECTION_PARTY, SETTINGS, UPDATE_ELECTION_PARTY, UPDATE_SETTING_RESULT, UPDATE_SETTING_VOTE } from "../actions/privliged";
 
 const initialState = {
   admins: [],
   blogs: [],
+  latestBlogs: [],
   announcements: [],
+  latestAnnouncements: [],
   donations: [],
-  settings: {},
+  latestDonations: [],
+  settings: {
+    updated: false,
+  },
+  party: {
+    status: false,
+    data: {}
+  }
 }
 
 const miscellaneousRed = (state = initialState, action) => {
@@ -22,10 +31,22 @@ const miscellaneousRed = (state = initialState, action) => {
         announcements: action.announcements
       }
     }
+    case LATEST_ANNOUNCEMENTS: {
+      return {
+        ...state,
+        latestAnnouncements: action.latestAnnouncements
+      }
+    }
     case ALL_BLOGS: {
       return {
         ...state,
         blogs: action.blogs
+      }
+    }
+    case LATEST_BLOGS: {
+      return {
+        ...state,
+        latestBlogs: action.latestBlogs
       }
     }
     case ALL_DONATIONS: {
@@ -34,10 +55,16 @@ const miscellaneousRed = (state = initialState, action) => {
         donations: action.donations
       }
     }
-    case SETTINGS: {
+    case LATEST_DONATIONS: {
       return {
         ...state,
-        settings: action.settings
+        latestDonations: action.latestDonations
+      }
+    }
+    case ADMIN_SETTINGS: {
+      return {
+        ...state,
+        settings: {...action.settings, updated: true}
       }
     }
     case UPDATE_SETTING_VOTE: {
@@ -55,6 +82,15 @@ const miscellaneousRed = (state = initialState, action) => {
         settings: {
           ...state.settings,
           results: action.status
+        }
+      }
+    }
+    case UPDATE_PARTY: {
+      return {
+        ...state,
+        party: {
+          status: true,
+          data: action.party
         }
       }
     }

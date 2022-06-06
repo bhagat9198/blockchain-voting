@@ -22,9 +22,9 @@ export default function CardStats3(props) {
         {imgUrl && <Box sx={{ width: '50px', height: '50px', p: 1 }}>
           <img src={partySymbol} alt="symbol" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%' }} />
         </Box>}
-        <Typography sx={{ pl: 2 }} >{name}</Typography>
+        <Typography sx={{ px: 1 }} >{name}</Typography>
       </Box>
-      <Typography sx={{ p: 2 }} >
+      <Typography sx={{ p: 2, wordBreak: 'break-word' }} paragraph={true} >
         {cause}
       </Typography>
       {children}

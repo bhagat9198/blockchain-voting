@@ -54,7 +54,7 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        {row.data.map((r, i) => <TableCell component="th" scope="row">{r}</TableCell>)}
+        {row.data.map((r, i) => <TableCell component="th" scope="row" key={`t_row_${i}`}>{r}</TableCell>)}
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -75,23 +75,6 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
 
 // const rows = [
 //   createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
@@ -110,7 +93,7 @@ export default function MuiTableCollapsible(props) {
         <TableHead>
           <TableRow>
             <TableCell />
-            {columns.map(c => <TableCell>{c}</TableCell>)}
+            {columns.map((c, i) => <TableCell key={`t_cell_${i}`} >{c}</TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>

@@ -21,14 +21,19 @@ export default function CardStats2(props) {
       }
     })
   }
-
+  let imgUrl;
+  if(img) {
+    imgUrl = img;
+  } else {
+    imgUrl = postImg;
+  }
   return (
     <Card >
       <CardActionArea>
         <CardMedia
           component="img"
           height="140"
-          image={img}
+          image={imgUrl}
           alt="green iguana"
         />
         <CardContent>

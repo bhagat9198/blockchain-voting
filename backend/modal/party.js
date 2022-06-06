@@ -31,9 +31,15 @@ const PartySchema = new mongoose.Schema({
   userType: {
     type: String
   },
+  userId: {
+    type: String
+  },
   createdAt: {
     type: String
   },
+  account: {
+    type: String
+  }
 })
 
 module.exports = mongoose.model('Party', PartySchema);

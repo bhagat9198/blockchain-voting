@@ -16,6 +16,9 @@ const UserSchema = new mongoose.Schema({
   voteCardId: {
     type: String,
   },
+  partyId: {
+    type: String,
+  },
   blogs: {
     type: Array,
   },
@@ -31,11 +34,11 @@ const UserSchema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
   },
-  imgPath: {
-    type: String
+  hasVoted: {
+    type: Boolean
   },
-  imgName: {
-    type: String
+  profileImg: {
+    type: Object
   }
 });
 

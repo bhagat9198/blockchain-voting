@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from './../store/actions/auth';
 import { toast } from 'react-toastify';
 import { BASE_URL, imgObjectUrl } from '../util';
+import { updateProfilePic } from '../store/actions/common';
 
 export default function BasicProfileInfo() {
   const [oldPwd, setOldPwd] = useState('');
@@ -37,16 +38,28 @@ export default function BasicProfileInfo() {
     toast.success('Password updated')
   }
 
-  const fileImgChangeHandler = e => {
+  const fileImgChangeHandler = async (e) => {
     if (!e.target.files || e.target.files.length === 0) return;
 
     const res = imgObjectUrl({ fileImg: e.target.files[0] });
+    console.log('BasicProfileInfo :: fileImgChangeHandler :: res :: ', res);
     if (res.status) {
       setImgPreview(res.imgObj)
     } else {
       toast.error('Error. Try again')
       setImgPreview(false);
+      return;
     }
+
+    const ress = await dispatch(updateProfilePic({ imgData: e.target.files[0] }));
+    console.log('BasicProfileInfo :: fileImgChangeHandler :: ress :: ', ress);
+    if (!ress.status) {
+      toast.error(ress.message);
+      return
+    }
+
+    toast.success('Profile pic updated.')
+
   }
 
   const uploadImgHandler = e => {
@@ -54,10 +67,10 @@ export default function BasicProfileInfo() {
   }
 
   let uImg;
-  if(imgPreview) {
+  if (imgPreview) {
     uImg = imgPreview;
-  } else if(userData?.imgPath && userData?.imgName) {
-    uImg = `${BASE_URL}/${userData?.imgPath}/${userData?.imgName}`
+  } else if (userData?.profileImg?.filePath && userData?.profileImg?.fileName) {
+    uImg = `${BASE_URL}/${userData?.profileImg?.filePath}/${userData?.profileImg?.fileName}`
   } else {
     uImg = userImg
   }

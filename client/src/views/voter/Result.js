@@ -7,7 +7,7 @@ export default function Result(props) {
 
   return (
     <BodyLayout userType={userType} >
-      <ResultCommon />
+      <ResultCommon userType={userType} />
     </BodyLayout>
   )
 }

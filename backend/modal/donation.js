@@ -16,6 +16,9 @@ const DonationSchema = new mongoose.Schema({
   createdAt: {
     type: String
   },
+  account: {
+    type: String
+  }
 })
 
 module.exports = mongoose.model('Donation', DonationSchema);

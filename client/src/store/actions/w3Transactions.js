@@ -26,11 +26,13 @@ export const getAccount = async ({accountNum}) => {
   const accounts = await new getWeb3.eth.getAccounts();
   // console.log('extractAccounts :: accounts :: ', accounts);
   account = accounts[accountNum];
+  // console.log('getAccount :: account :: ', account);
   // if (accounts.length === counter) {
   //   counter = 0;
   // } else {
   //   counter = counter + 1;
   // }
+  return account;
 }
 
 export const initVotingContract = () => {
@@ -75,4 +77,3 @@ export const getBalance = async () => {
   // console.log('getBalance :: balance :: ', balance);
   return balance;
 }
-

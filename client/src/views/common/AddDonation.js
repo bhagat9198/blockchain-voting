@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { addDonation } from '../../store/actions/privliged';
+import { allDonations as allDonationsFun } from '../../store/actions/common';
 
 export default function AddDonation(props) {
   const [heading, setHeading] = useState('');
@@ -19,8 +20,8 @@ export default function AddDonation(props) {
       toast.error(res.message);
       return
     }
-
     toast.success('Donation added successfully');
+    dispatch(allDonationsFun())
   }
 
   return (

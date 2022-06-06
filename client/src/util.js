@@ -49,6 +49,27 @@ const imgObjectUrl = ({ fileImg }) => {
   }
 }
 
+const getUrlConfig = ({ tokenName }) => {
+  // console.log('util :: getUrlConfig :: tokenName :: ', tokenName);
+  const token = localStorage.getItem(tokenName);
+  // console.log('util :: getUrlConfig :: token :: ', token);
+
+  if(!token) {
+    return {
+      status: false,
+      message: 'token not found'
+    }
+  }
+  return {
+    status: true,
+    config: {
+      headers: {
+        'authorization': token
+      }
+    }
+  }
+}
+
 
 // const getDate = async ({ timestamp }) => {
 //   const date = new Date(timestamp);
@@ -62,4 +83,5 @@ module.exports.darkColors = darkColors;
 module.exports.lightColors = lightColors;
 module.exports.colorCombinations = colorCombinations;
 module.exports.imgObjectUrl = imgObjectUrl;
+module.exports.getUrlConfig = getUrlConfig;
 // module.exports.getDate = getDate;
