@@ -3,10 +3,10 @@ const jwtSecret = process.env.JWT_SECRET;
 
 exports.adminAuthorization = (req, res, next) => {
   const header = req.headers['authorization'];
-  console.log('middlewares :: auth :: header :: ', header);
-  console.log('middlewares :: auth :: req.headers :: ', req.headers);
+  // console.log('middlewares :: auth :: header :: ', header);
+  // console.log('middlewares :: auth :: req.headers :: ', req.headers);
   const result = checkAuthorization({ uType: 'admin', header });
-  console.log('middlewares :: auth :: ', result);
+  // console.log('middlewares :: auth :: ', result);
   if (!result.status) {
     return res.json(401).json({
       status: res.status,
@@ -22,7 +22,7 @@ exports.adminAuthorization = (req, res, next) => {
 exports.electionPartyAuthorization = (req, res, next) => {
   const header = req.headers['authorization'];
   const result = checkAuthorization({ uType: 'electionParty', header });
-  console.log('middlewares :: electionPartyAuthorization :: result :: ', result);
+  // console.log('middlewares :: electionPartyAuthorization :: result :: ', result);
   if (!result.status) {
     return res.json(401).json({
       status: res.status,
@@ -38,7 +38,7 @@ exports.electionPartyAuthorization = (req, res, next) => {
 exports.voterAuthorization = (req, res, next) => {
   const header = req.headers['authorization'];
   const result = checkAuthorization({ uType: 'voter', header });
-  console.log('middlewares :: voterAuthorization :: result :: ', result);
+  // console.log('middlewares :: voterAuthorization :: result :: ', result);
   if (!result.status) {
     return res.json(401).json({
       status: res.status,
@@ -55,7 +55,7 @@ exports.voterAuthorization = (req, res, next) => {
 
 
 function checkAuthorization({ uType, header }) {
-  console.log('middlewares :: checkAuthorization :: header :: ', header);
+  // console.log('middlewares :: checkAuthorization :: header :: ', header);
   let token;
   if (header === undefined) {
     return {
@@ -66,7 +66,7 @@ function checkAuthorization({ uType, header }) {
   token = header;
   try {
     const data = jwt.verify(token, jwtSecret);
-    console.log('middlewares :: checkAuthorization :: :: data :: ', data);
+    // console.log('middlewares :: checkAuthorization :: :: data :: ', data);
     const _id = data._id;
     const userType = data.userType;
     const email = data.email;

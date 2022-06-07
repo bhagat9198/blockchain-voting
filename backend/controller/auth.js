@@ -183,7 +183,7 @@ exports.getAdminDetails = async(req, res, next) => {
 
   try {
     const admin = await AdminModal.findById(_id);
-    console.log('auth :: getAdminDetails :: admin :: ', admin);
+    // console.log('auth :: getAdminDetails :: admin :: ', admin);
     if(!admin) {
       return res.json(400).json({
         message: 'No user with specifid id',
@@ -209,7 +209,7 @@ exports.getUserDetails = async(req, res, next) => {
   const _id = req.params.id;
   try {
     const user = await UserModal.findById(_id);
-    console.log('auth :: getUserDetails :: user :: ', user);
+    // console.log('auth :: getUserDetails :: user :: ', user);
     if(!user) {
       return res.json(400).json({
         message: 'No user with specifid id',
@@ -231,8 +231,6 @@ exports.getUserDetails = async(req, res, next) => {
 }
 
 exports.patchUserDetails = async(req, res, next) => {
-  console.log('auth :: patchUserDetails :: req.body :: ', req.body);
-  console.log('auth :: patchUserDetails :: req.headers :: ', req.headers);
   const _id = req.params.id;
   const partyId = req.body.partyId;
   const blogId = req.body.blogId;
@@ -243,7 +241,7 @@ exports.patchUserDetails = async(req, res, next) => {
 
   try {
     let user = await UserModal.findById(_id);
-    console.log('auth :: patchUserDetails :: user :: ', user);
+    // console.log('auth :: patchUserDetails :: user :: ', user);
     if(!user) {
       return res.json(400).json({
         message: 'No user with specifid id',
@@ -273,7 +271,7 @@ exports.patchUserDetails = async(req, res, next) => {
       user.donations.unshift(donationId);
     }
 
-    console.log('auth :: patchUserDetails :: user :: ', user);
+    // console.log('auth :: patchUserDetails :: user :: ', user);
     let savedUserData = await user.save();
     return res.status(200).json({
       status: true,
@@ -301,7 +299,7 @@ exports.patchAdminDetails = async(req, res, next) => {
 
   try {
     const user = await AdminModal.findById(_id);
-    console.log('auth :: patchAdminDetails :: user :: ', user);
+    // console.log('auth :: patchAdminDetails :: admin :: ', user);
     if(!user) {
       return res.json(400).json({
         message: 'No admin with specifid id',
@@ -330,7 +328,7 @@ exports.patchAdminDetails = async(req, res, next) => {
       user.donations.unshift(donationId);
     }
 
-    console.log('auth :: patchUserDetails :: user :: ', user);
+    // console.log('auth :: patchUserDetails :: user :: ', user);
     let savedUserData = await user.save();
 
     return res.status(200).json({
@@ -349,7 +347,7 @@ exports.patchAdminDetails = async(req, res, next) => {
 }
 
 exports.postGenerateToken = async(req, res, next) => {
-  console.log('auth :: postGenerateToken :: req.body :: ', req.body);
+  // console.log('auth :: postGenerateToken :: req.body :: ', req.body);
   const userType = req.body.userType;
   const email = req.body.email;
   const _id = req.body._id;
@@ -359,7 +357,7 @@ exports.postGenerateToken = async(req, res, next) => {
     userType,
     email,
   }, jwtSecret);
-  console.log('auth :: postGenerateToken :: token :: ', token);
+  // console.log('auth :: postGenerateToken :: token :: ', token);
 
   res.setHeader(
     "x-access-token", `${token}`

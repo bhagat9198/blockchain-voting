@@ -110,7 +110,7 @@ exports.postProfilePic = async (req, res, next) => {
   // const img = req.body.img;
   try {
     const user = await userModal.findById(_id);
-    console.log('postUserImg :: user :: ', user);
+    // console.log('postUserImg :: user :: ', user);
     if(!user) {
       return res.status(200).json({
         status: true,
@@ -165,9 +165,10 @@ exports.getAdminSettings = (req, res, next) => {
 
 exports.getParty = async (req, res, next) => {
   const _id = req.params._id;
-
+  console.log('common :: getParty :: _id :: ', _id);
   try {
-    const party = partyModal.findById(_id);
+    const party = await partyModal.findById(_id);
+    console.log('common :: getParty :: party :: ',party );
     if(!party) {
       return res.status(400).json({
         status: false,
@@ -180,6 +181,7 @@ exports.getParty = async (req, res, next) => {
       data: party
     })
   } catch(error) {
+    console.log('common :: getParty :: error :: ', error);
     return res.status(400).json({
       status: false,
       message: error.message
