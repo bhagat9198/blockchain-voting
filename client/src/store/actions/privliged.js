@@ -518,14 +518,17 @@ export const updateElectionParty = (data) => {
       // console.log('updateElectionParty :: updatedUserRes :: ', updatedUserRes);
 
       if (res.status === 201) {
-        await addElectionParty({ id: res.data.data._id })
+        // await addElectionParty({ id: res.data.data._id })
         dispatch({
           type: UPDATE_PARTY,
           party: res.data.data
         })
         return {
           status: true,
-          message: res.message
+          message: res.message,
+          data: {
+            id: res.data.data._id
+          }
         }
       } else {
         return {

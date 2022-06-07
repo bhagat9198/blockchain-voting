@@ -34,7 +34,7 @@ import DonationElectionParty from './views/electionParty/Donation';
 import ProfileElectionParty from './views/electionParty/Profile';
 import Unauthorized from './views/common/Unauthorized';
 import SettingsAdmin from './views/admin/Settings';
-import { getAccount, initEthReceiverContract, initEtherSenderContract, initVotingContract, getBalance } from './store/actions/w3Transactions';
+import { getAccount, initVotingContract, getBalance } from './store/actions/w3Transactions';
 import { useDispatch, useSelector } from "react-redux";
 import {
   admin0Data, admin1Data,
@@ -205,15 +205,16 @@ export default function App() {
 
     if (!userRed.status) return;
     // console.log(getWeb3);
-    if (!getWeb3 || !getWeb3.eth) return;
+    // if (!getWeb3 || !getWeb3.eth) return;
 
     async function asyncFun() {
       // get account
       const account = await getAccount({ accountNum: userNumber })
+      console.log('App :: account :: ', account);
 
       // initlise contracts
-      await initEthReceiverContract();
-      await initEtherSenderContract();
+      // await initEthReceiverContract();
+      // await initEtherSenderContract();
       await initVotingContract();
 
       // get balanace
@@ -227,7 +228,9 @@ export default function App() {
       }
       toast.success('Web 3 account is enabled');
     }
-    asyncFun();
+
+      asyncFun();
+
 
   }, [getWeb3, userNumber, userRed.status])
 

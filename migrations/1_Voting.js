@@ -1,4 +1,4 @@
-const Voting = artifacts.require("./../Voting.sol");
+const Voting = artifacts.require("./Voting.sol");
 
 module.exports = function (deployer) {
   deployer.deploy(Voting);

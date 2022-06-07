@@ -12,7 +12,9 @@ import StarIcon from '@mui/icons-material/Star';
 import { toast } from 'react-toastify'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { adminSettings as adminSettingsFun } from './../../store/actions/common'
-
+import { displayElectionParty, initVotingContract } from '../../store/actions/w3Transactions'
+import VotingContractRaw from './../../contracts/Voting.json';
+import getWeb3 from './../../getWeb3';
 
 export default function Vote(props) {
   const { userType } = props;
@@ -36,9 +38,40 @@ export default function Vote(props) {
         toast.error(res.message);
         return;
       }
+      // displayElectionParty();
     }
     asyncFun()
+
   }, [])
+
+  useEffect(async() => {
+    const web3 = await getWeb3(); 
+
+    const accounts = await web3.eth.getAccounts();
+    console.log('Vote :: accounts :: ', accounts);
+    const networkId = await web3.eth.net.getId();
+    console.log('Vote :: networkId :: ', networkId);
+    const deployedNetwork = VotingContractRaw.networks[networkId];
+
+    const contract = await new web3.eth.Contract(
+      VotingContractRaw.abi,
+      deployedNetwork && deployedNetwork.address,
+    );
+    console.log('Vote :: contract :: ', contract);
+
+    const req = await contract.methods.set(5).send({ from: accounts[0] });
+    console.log('Vote :: req :: ', req);
+    // Get the value from the contract to prove it worked.
+    const response = await contract.methods.get().call();
+    console.log('Vote :: response :: ', response);
+
+    const response2 = await contract.methods.getAllData().call()
+    console.log('Vote :: response2 :: ', response2);
+  
+    const response3 = await contract.methods.end().call()
+    console.log('Vote :: response3 :: ', response3);
+  }, [])
+
 
   const tcList = t_c.map(tc => {
     return {

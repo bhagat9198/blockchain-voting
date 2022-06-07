@@ -45,7 +45,7 @@ export const getParty = (data) => {
     try {
       let res;
       if (isElectionParty) {
-        res = await axios.get(`${BASE_URL}/election-party/${partyId}`, configRes.config);
+        res = await axios.get(`${BASE_URL}/election-party/party/${partyId}`, configRes.config);
       } else {
         return {
           status: false,

@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-contract EtherSender {
+contract SendEther {
     constructor() payable {}
 
     receive() external payable {}
@@ -17,13 +18,5 @@ contract EtherSender {
     function sendViaCall(address payable _to) external payable {
         (bool success, ) = _to.call{value: 1}("");
         require(success, "call failed");
-    }
-}
-
-contract EtherReceiver {
-    event Log(uint256 amount, uint256 gas);
-
-    receive() external payable {
-        emit Log(msg.value, gasleft());
     }
 }

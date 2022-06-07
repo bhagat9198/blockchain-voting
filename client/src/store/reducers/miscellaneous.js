@@ -1,5 +1,5 @@
-import { ADMIN_SETTINGS, ALL_ADMINS, ALL_ANNOUNCEMENTS, ALL_BLOGS, ALL_DONATIONS, LATEST_ANNOUNCEMENTS, LATEST_BLOGS, LATEST_DONATIONS } from "../actions/common";
-import { ADD_ELECTION_PARTY, SETTINGS, UPDATE_ELECTION_PARTY, UPDATE_SETTING_RESULT, UPDATE_SETTING_VOTE } from "../actions/privliged";
+import { ADMIN_SETTINGS, ALL_ADMINS, ALL_ANNOUNCEMENTS, ALL_BLOGS, ALL_DONATIONS, LATEST_ANNOUNCEMENTS, LATEST_BLOGS, LATEST_DONATIONS, UPDATE_PARTY } from "../actions/common";
+import { SETTINGS, UPDATE_SETTING_RESULT, UPDATE_SETTING_VOTE } from "../actions/privliged";
 
 const initialState = {
   admins: [],
@@ -12,10 +12,10 @@ const initialState = {
   settings: {
     updated: false,
   },
-  party: {
-    status: false,
-    data: {}
-  }
+  // party: {
+  //   status: false,
+  //   data: {}
+  // }
 }
 
 const miscellaneousRed = (state = initialState, action) => {
@@ -88,10 +88,7 @@ const miscellaneousRed = (state = initialState, action) => {
     case UPDATE_PARTY: {
       return {
         ...state,
-        party: {
-          status: true,
-          data: action.party
-        }
+        party: action.party
       }
     }
     default:
