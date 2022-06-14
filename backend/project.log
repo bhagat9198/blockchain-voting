@@ -2,3 +2,4 @@
 12:03:05.877 INFO  req came  :: 
 15:00:14.715 ERROR Error in connection.  ::querySrv ESERVFAIL _mongodb._tcp.main-cluster.f4ni3.mongodb.net 
 18:00:23.325 ERROR Error in connection.  ::querySrv ESERVFAIL _mongodb._tcp.main-cluster.f4ni3.mongodb.net 
+18:36:56.004 ERROR Error in connection.  ::connect ETIMEDOUT 34.93.56.119:27017 

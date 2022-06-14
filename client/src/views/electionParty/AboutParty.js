@@ -38,20 +38,25 @@ export default function AboutParty(props) {
 
   useEffect(() => {
     console.log('AboutParty :: miscellaneousRed :: ', miscellaneousRed);
-    if (miscellaneousRed?.party) {
-      setPartyAlreadyAdded(true)
-      return
-    }
+
 
     async function asyncFun() {
-      const res = await dispatch(getPartyFun());
+
+      const res = await dispatch({ partyId: userRed.partyId, addToRedux : true});
       if (!res.status) {
         toast.error(res.message);
         return;
       }
     }
-    asyncFun()
-  }, [miscellaneousRed?.party])
+    if (miscellaneousRed?.party) {
+      setPartyAlreadyAdded(true)
+    } else {
+      if (userRed.partyId) {
+        asyncFun()
+      }
+    }
+
+  }, [miscellaneousRed?.party, userRed])
 
   const uploadImgHandler = e => {
     inputFileRef.current.click();
@@ -86,10 +91,10 @@ export default function AboutParty(props) {
       return;
     }
     toast.success('Party Info Updated');
-    const web3 = await getWeb3(); 
-    
-    const accounts = await web3.eth.getAccounts();
-    console.log('updatePartyInfoHandler :: accounts :: ', accounts);
+    const web3 = await getWeb3();
+
+    const account = userRed.w3Account;
+    console.log('updatePartyInfoHandler :: account :: ', account);
     const networkId = await web3.eth.net.getId();
     console.log('updatePartyInfoHandler :: networkId :: ', networkId);
     const deployedNetwork = VotingContractRaw.networks[networkId];
@@ -100,7 +105,7 @@ export default function AboutParty(props) {
     );
     console.log('updatePartyInfoHandler :: contract :: ', contract);
 
-    const req = await contract.methods.addParty(`${res.data.id}`).send({ from: accounts[0] });
+    const req = await contract.methods.addParty(`${res.data.id}`).send({ from: account });
     console.log('updatePartyInfoHandler :: req :: ', req);
 
     return;
@@ -114,7 +119,7 @@ export default function AboutParty(props) {
   let imgurl;
   if (imgPreview) {
     imgurl = imgPreview
-  } else if(partyAlreadyAdded) {
+  } else if (partyAlreadyAdded) {
     imgurl = `${BASE_URL}/${miscellaneousRed?.party.imgPath}/${miscellaneousRed?.party.imgName}`;
   } else {
     imgurl = userImg;

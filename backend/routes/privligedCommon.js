@@ -1,5 +1,5 @@
 const express = require('express');
-const { adminAuthorization, electionPartyAuthorization } = require('../middlewares/auth');
+const { adminAuthorization, electionPartyAuthorization, voterAuthorization } = require('../middlewares/auth');
 const privligedCommonController = require('./../controller/privligedCommon');
 
 const routes = express.Router();
@@ -17,7 +17,6 @@ routes.post('/election-party/add-donation', electionPartyAuthorization, privlige
 // **************************** Election Party *************************************************** //
 
 routes.post('/election-party/update-party', electionPartyAuthorization, privligedCommonController.partyImg, privligedCommonController.postUpdateElectoralParty);
-
 
 // **************************** Admin  *************************************************** //
 

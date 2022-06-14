@@ -22,24 +22,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 
-function createData(name, calories, fat, carbs, protein) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-  };
-}
+// function createData(field1, calories, fat, carbs, protein) {
+//   return {
+//     name,
+//     calories,
+//     fat,
+//     carbs,
+//     protein,
+//   };
+// }
 
-const rows = [
-  createData('Party A', 'Ajith', 100, 10, 'U.P'),
-  createData('Party B', 'Akhil', 50, 3, 'Karnataka'),
-  createData('Party C', 'Maya', 70, 8, 'M.P'),
-  createData('Party D', 'Raj Mohan', 50, 2, 'Rajesthan'),
-  createData('Party E', 'Vidya B', 10, 1, 'U.K'),
-  createData('Party F', 'Kishor', 80, 8, 'T.N'),
-];
+// const rows = [
+//   createData('Party A', 'Ajith', 100, 10, 'U.P'),
+//   createData('Party B', 'Akhil', 50, 3, 'Karnataka'),
+//   createData('Party C', 'Maya', 70, 8, 'M.P'),
+//   createData('Party D', 'Raj Mohan', 50, 2, 'Rajesthan'),
+//   createData('Party E', 'Vidya B', 10, 1, 'U.K'),
+//   createData('Party F', 'Kishor', 80, 8, 'T.N'),
+// ];
 
 
 function descendingComparator(a, b, orderBy) {
@@ -72,46 +72,14 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-  {
-    id: 'Electoral Party Name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Electoral Party Name',
-  },
-  {
-    id: 'Candidate Name',
-    numeric: true,
-    disablePadding: false,
-    label: 'Candidate Name',
-  },
-  {
-    id: 'Votes',
-    numeric: true,
-    disablePadding: false,
-    label: 'Votes',
-  },
-  {
-    id: 'Seats',
-    numeric: true,
-    disablePadding: false,
-    label: 'Seats',
-  },
-  {
-    id: 'Place',
-    numeric: true,
-    disablePadding: false,
-    label: 'Place',
-  },
-];
-
 function MuiTableAdvanceHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, isCkeckboxReq } =
+  const { headCells, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, isCkeckboxReq } =
     props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
+  console.log('MuiTableAdvanceHead :: headCells :: ', headCells);
   return (
     <TableHead>
       <TableRow>
@@ -216,8 +184,10 @@ MuiTableAdvanceToolbar.propTypes = {
 };
 
 export default function MuiTableAdvance(props) {
-  const { columns, rowsData, isCkeckboxReq } = props;
-
+  const { columns, rows, isCkeckboxReq } = props;
+  console.log('MuiTableAdvance :: columns :: ', columns);
+  console.log('MuiTableAdvance :: rows :: ', rows);
+  let headCells = columns;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -302,6 +272,7 @@ export default function MuiTableAdvance(props) {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              headCells={headCells}
               isCkeckboxReq={isCkeckboxReq == false ? false : true}
             />
             <TableBody>
@@ -335,12 +306,12 @@ export default function MuiTableAdvance(props) {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                        {row.partyName}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.candidateName}</TableCell>
+                      <TableCell align="right">{row.voteRecieved}</TableCell>
+                      <TableCell align="right">{row.district}</TableCell>
+                      <TableCell align="right">{row.state}</TableCell>
                     </TableRow>
                   );
                 })}

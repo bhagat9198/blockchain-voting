@@ -38,6 +38,36 @@ const fileFilter = () => {
 
 // ****************************************************************************************************** //
 
+exports.getVoteSubmit = async (req, res, next) => { 
+  console.log('getVoteSubmit :: ');
+  const _id = req.params._id;
+
+  try {
+    const user = await userModal.findById(_id);
+    console.log('getVoteSubmit :: user :: ', user);
+    if(!user.name) {
+      return res.status(400).json({
+        status: false,
+        message: 'invalid user id'
+      })
+    }
+
+    user.hasVoted = true;
+    await user.save();
+
+    return res.status(200).json({
+      status: true,
+      message:'success'
+    })
+  } catch(error) {
+    console.log('getVoteSubmit :: error :: ', error);
+    return res.status(400).json({
+      status: false,
+      message:error.message
+    })
+  }
+}
+
 exports.getAnnouncements = async (req, res, next) => {
   const latest = req.query.latest;
   console.log('common :: getAnnouncements :: latest :: ', latest);

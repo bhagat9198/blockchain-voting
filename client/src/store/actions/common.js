@@ -26,12 +26,14 @@ export const UPDATE_PARTY = 'UPDATE_PARTY';
 //   }
 // }
 
-export const getParty = (data) => {
+
+export const submitVote = (data) => {
   return async (dispatch, getState) => {
     const allStates = await getState(state => state);
     const userRed = allStates.userRed;
-    const partyId = userRed?.userData?.partyId;
+    const userId = userRed.userData._id;
     const isAdmin = userRed.isAdmin;
+    const isVoter = userRed.isVoter;
     const isElectionParty = userRed.isElectionParty;
     const token = userRed.token;
     const configRes = await getUrlConfig({ tokenName: token.label });
@@ -45,19 +47,16 @@ export const getParty = (data) => {
     try {
       let res;
       if (isElectionParty) {
-        res = await axios.get(`${BASE_URL}/election-party/party/${partyId}`, configRes.config);
+        res = await axios.get(`${BASE_URL}/election-party/vote-submit/${userId}`, configRes.config);
+      } else if (isVoter) {
+        res = await axios.get(`${BASE_URL}/voter/vote-submit/${userId}`, configRes.config);
       } else {
         return {
           status: false,
           message: 'Unauthorized user'
         }
       }
-      console.log('getParty :: res :: ', res);
-
-      dispatch({
-        type: UPDATE_PARTY,
-        party: res.data.data
-      })
+      console.log('submitVote :: res :: ', res);
 
       return {
         status: true,
@@ -73,6 +72,60 @@ export const getParty = (data) => {
   }
 }
 
+export const getParty = (data) => {
+  return async (dispatch, getState) => {
+    const allStates = await getState(state => state);
+    const userRed = allStates.userRed;
+    const partyId = data.partyId;
+    const isAdmin = userRed.isAdmin;
+    const isVoter = userRed.isVoter;
+    const isElectionParty = userRed.isElectionParty;
+    const token = userRed.token;
+    const configRes = await getUrlConfig({ tokenName: token.label });
+    if (!configRes?.status) {
+      return {
+        status: false,
+        message: configRes?.message
+      }
+    }
+
+    try {
+      let res;
+      if (isElectionParty) {
+        res = await axios.get(`${BASE_URL}/election-party/party/${partyId}`, configRes.config);
+      } else if (isAdmin) {
+        res = await axios.get(`${BASE_URL}/admin/party/${partyId}`, configRes.config);
+      } else if (isVoter) {
+        res = await axios.get(`${BASE_URL}/voter/party/${partyId}`, configRes.config);
+      } else {
+        return {
+          status: false,
+          message: 'Unauthorized user'
+        }
+      }
+      console.log('getParty :: res :: ', res);
+
+      if(data.addToRedux) {
+        dispatch({
+          type: UPDATE_PARTY,
+          party: res.data.data
+        })
+      }
+
+      return {
+        status: true,
+        party: res.data.data
+      }
+    } catch (error) {
+      console.log(error);
+      return {
+        status: false,
+        message: error.message
+      }
+    }
+
+  }
+}
 
 export const updateW3Account = (data) => {
   return async (dispatch, getState) => {
@@ -94,7 +147,6 @@ export const updateW3Account = (data) => {
     }
   }
 }
-
 
 export const updateProfilePic = (data) => {
   return async (dispatch, getState) => {
