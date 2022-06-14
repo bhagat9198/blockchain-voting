@@ -1,4 +1,4 @@
-import React, { Suspense, Component, useEffect } from "react";
+import React, { Suspense, Component, useEffect, useState } from "react";
 // import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
 
@@ -150,9 +150,13 @@ async function getStaticData({ currentPage, userNumber, userStatus }) {
   }
 }
 
+// let expection = false;
+let init = false;
 export default function App() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const [excp, setExcp] = useState(false);
+
   const currentPage = location.pathname.split('/')[1];
 
   const userRed = useSelector(state => state.userRed);
@@ -162,21 +166,28 @@ export default function App() {
 
 
   let userNumber;
-  // console.log('App :: currentPage :: ', currentPage);
-  if (currentPage != 'login' && currentPage !== 'signup' &&
-    currentPage !== 'about-us' && currentPage !== 'docs') {
-    const res = getParams({ location });
-    if (!res.status) {
-      toast.error(res.message);
-      userNumber = 1;
+  console.log('App :: currentPage :: ', currentPage);
+  if(!init) {
+    init = true
+    if (currentPage != 'login' && currentPage !== 'signup' &&
+      currentPage !== 'about-us' && currentPage !== 'docs') {
+      console.log('App :: currentPage :: if', currentPage);
+      const res = getParams({ location });
+      if (!res.status) {
+        toast.error(res.message);
+        userNumber = 1;
+      } else {
+        userNumber = res.message;
+      }
     } else {
-      userNumber = res.message;
+      console.log('App :: currentPage :: else', currentPage);
+      setExcp(true)
     }
   }
 
   useEffect(() => {
     console.log('App :: userNumber :: ', userNumber);
-    if (userNumber === undefined || userNumber === null || userNumber === NaN) return;
+    if (userNumber === undefined || userNumber === null || userNumber === NaN) {return};
     const uType = getUserType({ currentPage });
     console.log('App :: uType :: ', uType);
     if (!uType.isAdmin && !uType.isVoter && !uType.isElectionParty) {
@@ -235,7 +246,8 @@ export default function App() {
   }, [getWeb3, userNumber, userRed.status])
 
 
-  if (!userRed.status) {
+  console.log('App :: excp :: ', excp, userRed.status);
+  if (!excp && !userRed.status) {
     return (
       <Routes >
         <Route exact path='/401' element={<Error errorCode="401" goBackBtn={false} />} />
