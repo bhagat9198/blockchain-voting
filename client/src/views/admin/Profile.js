@@ -14,6 +14,7 @@ import { format } from 'date-fns';
 
 export default function Profile(props) {
   const { userType } = props;
+  console.log('Profile :: props :: ', props);
   const dispatch = useDispatch();
 
   const [addAdminName, setAddAdminName] = useState('');

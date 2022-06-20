@@ -33,6 +33,7 @@ const drawerWidth = 240;
 
 function BodyLayout(props) {
   const { window, children, userType } = props;
+  console.log('BodyLayout :: props :: ', props);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { search: queryParams } = useLocation()
   // console.log('App :: location :: queryParams :: ', queryParams);

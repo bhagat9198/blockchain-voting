@@ -167,27 +167,34 @@ export default function App() {
 
   let userNumber;
   console.log('App :: currentPage :: ', currentPage);
-  if(!init) {
-    init = true
-    if (currentPage != 'login' && currentPage !== 'signup' &&
-      currentPage !== 'about-us' && currentPage !== 'docs') {
-      console.log('App :: currentPage :: if', currentPage);
-      const res = getParams({ location });
-      if (!res.status) {
-        toast.error(res.message);
-        userNumber = 1;
-      } else {
-        userNumber = res.message;
-      }
+  // if(!init) {
+  //   init = true
+  if (currentPage != 'login' && currentPage !== 'signup' &&
+    currentPage !== 'about-us' && currentPage !== 'docs') {
+    console.log('App :: currentPage :: if', currentPage);
+    const res = getParams({ location });
+    if (!res.status) {
+      toast.error(res.message);
+      userNumber = 1;
     } else {
-      console.log('App :: currentPage :: else', currentPage);
+      userNumber = res.message;
+    }
+  } else {
+    console.log('App :: currentPage :: else', currentPage);
+    // setExcp(true)
+  }
+  // }
+
+  if (!init) {
+    init = true
+    if (currentPage == 'auth') {
       setExcp(true)
     }
   }
 
   useEffect(() => {
     console.log('App :: userNumber :: ', userNumber);
-    if (userNumber === undefined || userNumber === null || userNumber === NaN) {return};
+    if (userNumber === undefined || userNumber === null || userNumber === NaN) { return };
     const uType = getUserType({ currentPage });
     console.log('App :: uType :: ', uType);
     if (!uType.isAdmin && !uType.isVoter && !uType.isElectionParty) {
@@ -240,7 +247,7 @@ export default function App() {
       toast.success('Web 3 account is enabled');
     }
 
-      asyncFun();
+    asyncFun();
 
 
   }, [getWeb3, userNumber, userRed.status])
@@ -254,6 +261,8 @@ export default function App() {
       </Routes>)
   }
 
+
+  console.log('App :: userType :: ', userType);
   return (
     <>
       <ToastContainer
@@ -268,10 +277,10 @@ export default function App() {
 
       <Suspense fallback={loading} >
         <Routes  >
-          <Route exact path='/login' element={<Login />} />
+          <Route exact path='/auth/signin' element={<Login />} />
           <Route exact path='/about-us' element={<AboutUs />} />
           <Route exact path='/docs' element={<Docs />} />
-          <Route exact path='/signup' element={<Signup />} />
+          <Route exact path='/auth/signup' element={<Signup />} />
           <Route exact path='/admin/verify' element={<VerifyAdmin userType={userType} />} />
           <Route exact path='/admin/settings' element={<SettingsAdmin userType={userType} />} />
           <Route exact path='/admin/profile' element={<ProfileAdmin userType={userType} />} />

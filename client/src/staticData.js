@@ -1,7 +1,7 @@
 export const admin0Data = {
   devData: true,
   token: '',
-  _id: '62988cf0624dafa9958a45c3',
+  _id: '62af2fc9fbbf9d94cb624944',
   userType: 'admin',
   email: 'admin@admin0.com',
   isAdmin: true,
@@ -12,7 +12,7 @@ export const admin0Data = {
 export const admin1Data = {
   devData: true,
   token: '',
-  _id: '628bc231dee82bd41ef277af',
+  _id: '62af30abb57af2b2efd7f8e4',
   email: 'admin@admin1.com',
   userType: 'admin',
   isAdmin: true,

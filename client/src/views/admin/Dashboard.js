@@ -11,6 +11,7 @@ import BodyLayout from '../../components/BodyLayout';
 
 export default function Dashboard(props) {
   const { userType } = props;
+  console.log('Dashboard :: props :: ', props);
 
   return (
     <BodyLayout userType={userType} >
